@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>GYM LOG</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0a; --surface:#141414; --card:#141414;
+    --accent:#e8ff3a; --accent2:#ff4d00;
+    --text:#f0f0f0; --muted:#555; --border:#1e1e1e; --border2:#2a2a2a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;background:var(--bg);}
+  body{color:var(--text);font-family:'DM Sans','Helvetica Neue',sans-serif;max-width:600px;margin:0 auto;padding-bottom:5rem;}
+
+.header{display:flex;justify-content:space-between;align-items:flex-end;padding:1.4rem 1.25rem 1rem;border-bottom:1px solid var(–border);}
+.header-tag{font-size:0.58rem;letter-spacing:0.22em;color:var(–accent2);font-weight:700;text-transform:uppercase;margin-bottom:2px;}
+.header-title{font-family:‘Bebas Neue’,sans-serif;font-size:2rem;letter-spacing:0.05em;line-height:1;}
+.header-title span{color:var(–accent);}
+.tabs{display:flex;gap:4px;}
+.tab-btn{background:transparent;border:1px solid var(–border2);border-radius:4px;color:var(–muted);font-size:0.72rem;font-family:inherit;padding:6px 10px;cursor:pointer;transition:all 0.15s;}
+.tab-btn.active{background:var(–accent);border-color:var(–accent);color:#0a0a0a;font-weight:600;}
+
+.profile-bar{display:flex;gap:6px;padding:0.6rem 1.25rem;flex-wrap:wrap;}
+.profile-chip{background:#1a1a1a;border:1px solid var(–border2);border-radius:3px;padding:3px 8px;font-size:0.6rem;color:#888;letter-spacing:0.04em;}
+.profile-chip span{color:var(–accent);font-weight:600;}
+
+.day-row{display:flex;gap:8px;padding:1rem 1.25rem 0.5rem;overflow-x:auto;scrollbar-width:none;}
+.day-row::-webkit-scrollbar{display:none;}
+.day-btn{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;background:var(–surface);border:1px solid #222;border-radius:6px;padding:8px 14px;cursor:pointer;transition:all 0.15s;gap:2px;}
+.day-btn.active{border-color:var(–accent);}
+.day-btn-num{font-family:‘Bebas Neue’,sans-serif;font-size:1rem;color:var(–accent);letter-spacing:0.05em;}
+.day-btn-lbl{font-size:0.58rem;color:var(–muted);text-transform:uppercase;letter-spacing:0.1em;}
+
+.focus-row{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1.25rem 0.4rem;}
+.focus-badge{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:#1a1a1a;border:1px solid var(–border2);color:var(–accent);padding:4px 10px;border-radius:3px;}
+.progress-text{font-size:0.68rem;color:var(–muted);}
+.progress-bar-bg{height:2px;background:#1a1a1a;margin:0 1.25rem 1rem;border-radius:2px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:var(–accent);border-radius:2px;transition:width 0.3s ease;}
+
+.ex-list{padding:0 1.25rem;display:flex;flex-direction:column;gap:1rem;}
+.section-wrap{display:flex;flex-direction:column;gap:8px;}
+.section-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.18em;color:#444;padding-bottom:4px;border-bottom:1px solid #1a1a1a;}
+.ex-card{background:var(–card);border:1px solid var(–border);border-radius:6px;overflow:hidden;}
+.ex-header{display:flex;justify-content:space-between;align-items:center;padding:0.65rem 0.9rem;border-bottom:1px solid var(–border);gap:8px;}
+.ex-name{font-size:0.82rem;font-weight:500;color:#e0e0e0;flex:1;}
+.ex-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;}
+.ex-reps{font-size:0.63rem;color:var(–accent);font-weight:600;letter-spacing:0.05em;white-space:nowrap;}
+.ex-rest{font-size:0.6rem;color:#666;white-space:nowrap;}
+.sets-grid{padding:0.5rem 0.9rem 0.65rem;}
+.sets-header{display:grid;grid-template-columns:28px 1fr 1fr;gap:8px;margin-bottom:6px;}
+.set-label{font-size:0.56rem;text-transform:uppercase;letter-spacing:0.1em;color:#444;text-align:center;}
+.set-row{display:grid;grid-template-columns:28px 1fr 1fr;gap:8px;margin-bottom:6px;align-items:center;}
+.set-num{font-size:0.7rem;color:var(–muted);text-align:center;font-weight:600;}
+input[type=number]{background:#0f0f0f;border:1px solid var(–border2);border-radius:4px;color:var(–text);font-size:0.9rem;padding:6px 4px;text-align:center;width:100%;font-family:inherit;outline:none;-moz-appearance:textfield;}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+input[type=number]:focus{border-color:var(–accent);}
+.rest-btn-wrap{padding:0 0.9rem 0.7rem;}
+.rest-btn{width:100%;padding:7px;background:#1a1a1a;border:1px solid var(–border2);border-radius:4px;color:#aaa;font-size:0.72rem;font-family:inherit;cursor:pointer;letter-spacing:0.05em;transition:all 0.15s;}
+.rest-btn:hover{border-color:var(–accent);color:var(–accent);}
+.cardio-note{padding:0.5rem 0.9rem 0.6rem;font-size:0.72rem;color:var(–accent2);}
+.last-session{padding:0.4rem 0.9rem;background:#0d0d0d;border-bottom:1px solid var(–border);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.last-session-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:#444;flex-shrink:0;}
+.last-session-chips{display:flex;gap:5px;flex-wrap:wrap;}
+.last-chip{font-size:0.68rem;color:#777;background:#1a1a1a;border:1px solid #222;border-radius:3px;padding:2px 7px;}
+.trend-up{color:#6fcf3a;font-size:0.65rem;font-weight:700;margin-left:4px;}
+.trend-down{color:var(–accent2);font-size:0.65rem;font-weight:700;margin-left:4px;}
+.trend-eq{color:#555;font-size:0.65rem;margin-left:4px;}
+
+#timer-overlay{position:fixed;bottom:0;left:0;right:0;max-width:600px;margin:0 auto;background:#111;border-top:2px solid var(–accent);padding:1rem 1.25rem;z-index:100;display:none;align-items:center;gap:1rem;}
+#timer-overlay.show{display:flex;}
+.timer-label{font-size:0.65rem;color:var(–muted);text-transform:uppercase;letter-spacing:0.1em;flex:1;}
+.timer-label span{display:block;font-family:‘Bebas Neue’,sans-serif;font-size:2rem;color:var(–accent);line-height:1;letter-spacing:0.05em;}
+.timer-bar-wrap{flex:2;}
+.timer-bar-bg{height:4px;background:#2a2a2a;border-radius:2px;overflow:hidden;}
+.timer-bar-fill{height:100%;background:var(–accent);border-radius:2px;transition:width 0.5s linear;}
+.timer-cancel{background:transparent;border:1px solid #333;border-radius:4px;color:var(–muted);font-size:0.7rem;font-family:inherit;padding:6px 10px;cursor:pointer;white-space:nowrap;}
+
+.save-btn{display:block;margin:1.5rem 1.25rem 0;width:calc(100% - 2.5rem);padding:0.9rem;background:var(–accent);color:#0a0a0a;border:none;border-radius:6px;font-family:‘Bebas Neue’,sans-serif;font-size:1.1rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;}
+.save-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.save-btn.done{background:#2a3a0a;color:var(–accent);}
+
+/* CHECK-IN */
+.checkin-wrap{padding:0 1.25rem;display:flex;flex-direction:column;gap:1rem;}
+.section-intro{padding:0.75rem 1.25rem 0;font-size:0.75rem;color:var(–muted);line-height:1.5;}
+.checkin-card{background:var(–card);border:1px solid var(–border);border-radius:6px;overflow:hidden;}
+.checkin-card-header{padding:0.75rem 0.9rem;border-bottom:1px solid var(–border);font-family:‘Bebas Neue’,sans-serif;font-size:1rem;letter-spacing:0.06em;color:var(–accent);}
+.checkin-field{padding:0.6rem 0.9rem;border-bottom:1px solid var(–border);display:flex;flex-direction:column;gap:6px;}
+.checkin-field:last-child{border-bottom:none;}
+.checkin-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:var(–muted);}
+.checkin-input{background:#0f0f0f;border:1px solid var(–border2);border-radius:4px;color:var(–text);font-size:0.85rem;padding:8px 10px;font-family:inherit;outline:none;width:100%;}
+.checkin-input:focus{border-color:var(–accent);}
+.checkin-range{display:flex;gap:5px;}
+.checkin-range-btn{flex:1;padding:7px 2px;background:#1a1a1a;border:1px solid var(–border2);border-radius:4px;color:var(–muted);font-size:0.72rem;font-family:inherit;cursor:pointer;text-align:center;transition:all 0.15s;}
+.checkin-range-btn.selected{background:var(–accent);border-color:var(–accent);color:#0a0a0a;font-weight:600;}
+.checkin-state-wrap{display:flex;gap:6px;}
+.checkin-state-btn{flex:1;padding:7px 4px;background:#1a1a1a;border:1px solid var(–border2);border-radius:4px;color:var(–muted);font-size:0.75rem;font-family:inherit;cursor:pointer;text-align:center;transition:all 0.15s;}
+.checkin-state-btn.selected{border-color:var(–accent);color:var(–accent);font-weight:600;}
+.checkin-state-btn.selected.mal{border-color:var(–accent2);color:var(–accent2);}
+.analysis-box{font-size:0.8rem;line-height:1.65;color:#ccc;white-space:pre-wrap;}
+.analysis-tag{display:inline-block;background:#1a1a1a;border:1px solid var(–border2);border-radius:3px;padding:2px 8px;font-size:0.62rem;color:var(–accent);font-weight:600;letter-spacing:0.08em;margin-bottom:10px;}
+.analysis-loading{color:var(–muted);font-size:0.8rem;padding:0.5rem 0;text-align:center;}
+
+/* HISTORY */
+.history-list{padding:0.5rem 1.25rem;display:flex;flex-direction:column;gap:0.75rem;}
+.history-card{background:var(–card);border:1px solid var(–border);border-radius:6px;padding:0.9rem;}
+.history-date{font-family:‘Bebas Neue’,sans-serif;font-size:1rem;color:var(–accent);letter-spacing:0.06em;margin-bottom:0.6rem;text-transform:uppercase;}
+.history-ex{margin-bottom:0.6rem;}
+.history-ex-name{font-size:0.73rem;color:#aaa;margin-bottom:4px;}
+.history-set-row{display:flex;flex-wrap:wrap;gap:6px;}
+.history-chip{background:#1e1e1e;border:1px solid var(–border2);border-radius:3px;padding:3px 8px;font-size:0.7rem;color:#e0e0e0;font-weight:500;}
+.ci-hist-card{background:var(–card);border:1px solid var(–border);border-radius:6px;padding:0.9rem;margin-bottom:0.75rem;}
+.ci-hist-date{font-family:‘Bebas Neue’,sans-serif;font-size:0.9rem;color:var(–accent);letter-spacing:0.06em;margin-bottom:0.5rem;}
+.ci-hist-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #1a1a1a;font-size:0.72rem;}
+.ci-hist-row:last-child{border-bottom:none;}
+.ci-hist-key{color:var(–muted);}
+.ci-hist-val{color:var(–text);font-weight:500;}
+.hist-section-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.18em;color:#444;padding-bottom:6px;border-bottom:1px solid #1a1a1a;margin:0 1.25rem 0.75rem;}
+
+.empty{display:flex;flex-direction:column;align-items:center;padding:3rem 1.25rem;gap:0.75rem;}
+.empty-icon{font-size:2.5rem;}
+.empty-text{color:#444;font-size:0.85rem;text-align:center;}
+/* DIET VIEW */
+.diet-banner{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0.75rem 1.25rem 0.5rem;}
+.diet-macro{background:var(–card);border:1px solid var(–border);border-radius:6px;padding:0.6rem 0.4rem;text-align:center;}
+.diet-macro .mv{font-family:‘Bebas Neue’,sans-serif;font-size:1.2rem;line-height:1;margin-bottom:1px;}
+.diet-macro .ml{font-size:0.55rem;color:var(–muted);text-transform:uppercase;letter-spacing:0.08em;}
+.diet-macro.kc .mv{color:var(–accent2);}
+.diet-macro.pr .mv{color:#6fcf3a;}
+.diet-macro.cb .mv{color:#4a9fd4;}
+.diet-macro.ft .mv{color:var(–accent);}
+.diet-crohn{margin:0 1.25rem 0.75rem;background:#1a1000;border:1px solid #3a2800;border-radius:6px;padding:0.65rem 0.9rem;font-size:0.72rem;color:#d4922a;line-height:1.5;}
+.diet-crohn strong{color:#e8a940;}
+.diet-sch{display:flex;align-items:center;gap:8px;margin:0 1.25rem 0.75rem;background:var(–card);border:1px solid var(–border);border-radius:6px;padding:0.65rem 0.9rem;}
+.diet-sch-lbl{font-size:0.7rem;color:var(–muted);flex:1;}
+.diet-sch-btns{display:flex;gap:5px;}
+.diet-sch-btn{background:transparent;border:1px solid var(–border2);border-radius:4px;color:var(–muted);font-size:0.7rem;font-family:inherit;padding:5px 10px;cursor:pointer;transition:all 0.15s;}
+.diet-sch-btn.on{background:var(–accent);border-color:var(–accent);color:#0a0a0a;font-weight:600;}
+.diet-day-row{display:flex;gap:6px;padding:0 1.25rem 0.75rem;overflow-x:auto;scrollbar-width:none;}
+.diet-day-row::-webkit-scrollbar{display:none;}
+.diet-day-btn{flex:0 0 auto;background:var(–surface);border:1px solid #222;border-radius:6px;padding:6px 12px;cursor:pointer;transition:all 0.15s;font-size:0.72rem;color:var(–muted);font-family:inherit;white-space:nowrap;}
+.diet-day-btn.active{border-color:var(–accent);color:var(–accent);font-weight:600;}
+.diet-day-btn.rest{border-color:#333;}
+.diet-day-btn.rest.active{border-color:var(–accent2);color:var(–accent2);}
+.diet-panel{display:none;padding:0 1.25rem;}
+.diet-panel.on{display:block;}
+.diet-day-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:0.75rem;margin-bottom:0.75rem;border-bottom:1px solid var(–border);}
+.diet-day-title{font-family:‘Bebas Neue’,sans-serif;font-size:1.4rem;letter-spacing:0.05em;}
+.diet-day-sub{font-size:0.68rem;color:var(–muted);margin-top:2px;}
+.diet-badge{font-size:0.6rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+.diet-badge.train{background:#1a2400;border:1px solid var(–accent);color:var(–accent);}
+.diet-badge.rest{background:#1a0a00;border:1px solid var(–accent2);color:var(–accent2);}
+.diet-kcal-badge{font-family:‘Bebas Neue’,sans-serif;font-size:1.1rem;color:var(–accent2);text-align:right;margin-top:3px;}
+.diet-kcal-lbl{font-size:0.55rem;color:var(–muted);text-align:right;}
+.diet-note{background:#1a0a00;border:1px solid #3a1500;border-radius:6px;padding:0.6rem 0.8rem;font-size:0.72rem;color:#d4722a;margin-bottom:0.75rem;line-height:1.4;}
+.diet-note strong{color:var(–accent2);}
+.diet-note.green{background:#0d1a0d;border-color:#1a3a1a;color:#6fcf3a;}
+.diet-note.green strong{color:#8de84a;}
+.meal-cards{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:0.75rem;}
+.meal-card{background:var(–card);border:1px solid var(–border);border-radius:6px;overflow:hidden;}
+.meal-head{display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0.8rem;background:#0f0f0f;border-bottom:1px solid var(–border);}
+.meal-head-left{display:flex;align-items:center;gap:8px;}
+.meal-ico{font-size:1rem;}
+.meal-name{font-size:0.82rem;font-weight:600;}
+.meal-time{font-size:0.62rem;color:var(–muted);margin-top:1px;}
+.meal-kcal{font-size:0.68rem;font-weight:600;color:var(–accent2);background:#1a0a00;border:1px solid #2a1500;padding:2px 7px;border-radius:3px;}
+.meal-body{padding:0.5rem 0.8rem 0.6rem;}
+.food-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid #111;}
+.food-row:last-child{border-bottom:none;}
+.food-name{font-size:0.79rem;color:#ccc;}
+.food-amt{font-size:0.72rem;font-weight:600;color:var(–accent);white-space:nowrap;text-align:right;}
+.meal-macros{display:flex;gap:6px;margin-top:0.5rem;padding-top:0.5rem;border-top:1px dashed var(–border);}
+.mpill{font-size:0.6rem;font-weight:600;padding:2px 7px;border-radius:10px;}
+.mpill.p{background:#0d1a0d;color:#6fcf3a;border:1px solid #1a3a1a;}
+.mpill.c{background:#0d1520;color:#4a9fd4;border:1px solid #1a3050;}
+.mpill.f{background:#1a1400;color:var(–accent);border:1px solid #3a2e00;}
+.diet-tip{background:#0d1a0d;border:1px solid #1a3a1a;border-radius:6px;padding:0.65rem 0.8rem;font-size:0.73rem;color:#6fcf3a;line-height:1.5;margin-bottom:1rem;}
+.diet-tip strong{display:block;font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;color:#4ab020;}
+/* schedule toggle for diet meals */
+.pm-tarde{display:block;} .pm-manana{display:none;}
+.diet-view.manana .pm-tarde{display:none;} .diet-view.manana .pm-manana{display:block;}
+
+.pre-note-tarde{display:block;background:#1a2400;border:1px solid var(–accent);border-radius:4px;padding:4px 8px;font-size:0.68rem;color:var(–accent);margin-bottom:6px;font-weight:600;}
+.pre-note-manana{display:none;background:#1a2400;border:1px solid var(–accent);border-radius:4px;padding:4px 8px;font-size:0.68rem;color:var(–accent);margin-bottom:6px;font-weight:600;}
+.diet-view.manana .pre-note-tarde{display:none;}
+.diet-view.manana .pre-note-manana{display:block;}
+
+/* REVIEW BANNER */
+.review-banner{margin:0.6rem 1.25rem;border-radius:6px;overflow:hidden;border:1px solid var(–border2);}
+.review-countdown{display:flex;align-items:center;gap:10px;padding:0.7rem 0.9rem;background:#1a1a1a;}
+.review-countdown-icon{font-size:1.2rem;flex-shrink:0;}
+.review-countdown-text{flex:1;}
+.review-countdown-title{font-size:0.72rem;font-weight:600;color:#ccc;margin-bottom:1px;}
+.review-countdown-sub{font-size:0.62rem;color:var(–muted);}
+.review-days-badge{font-family:‘Bebas Neue’,sans-serif;font-size:1.4rem;color:var(–accent);letter-spacing:0.05em;flex-shrink:0;}
+.review-days-badge.urgent{color:var(–accent2);}
+.review-ready{background:#0d1a00;border-color:var(–accent);}
+.review-ready .review-countdown{background:#0d1a00;}
+.review-ready .review-countdown-title{color:var(–accent);}
+.review-btn{width:100%;padding:0.75rem;background:var(–accent);color:#0a0a0a;border:none;font-family:‘Bebas Neue’,sans-serif;font-size:1rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;}
+.review-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.review-btn.rest{background:var(–accent2);}
+.review-result{background:var(–card);border-top:1px solid var(–border);}
+.review-result-header{padding:0.6rem 0.9rem;border-bottom:1px solid var(–border);font-family:‘Bebas Neue’,sans-serif;font-size:0.9rem;color:var(–accent);letter-spacing:0.06em;}
+.review-result-body{padding:0.9rem;font-size:0.8rem;line-height:1.7;color:#ccc;white-space:pre-wrap;}
+.review-result-tag{display:inline-block;background:#1a2400;border:1px solid var(–accent);border-radius:3px;padding:2px 8px;font-size:0.62rem;color:var(–accent);font-weight:600;letter-spacing:0.08em;margin-bottom:10px;}
+
+.hidden{display:none;}
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-tag">ENTRENADOR PERSONAL</div>
+    <div class="header-title">GYM <span>LOG</span></div>
+  </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="setView('workout')" id="tab-workout">Entreno</button>
+    <button class="tab-btn" onclick="setView('diet')" id="tab-diet">Dieta</button>
+    <button class="tab-btn" onclick="setView('checkin')" id="tab-checkin">Check-in</button>
+    <button class="tab-btn" onclick="setView('history')" id="tab-history">Historial</button>
+  </div>
+</div>
+
+<div class="profile-bar">
+  <div class="profile-chip">Peso: <span>90 kg</span></div>
+  <div class="profile-chip">Talla: <span>1,85 m</span></div>
+  <div class="profile-chip">Objetivo: <span>Perder grasa</span></div>
+  <div class="profile-chip">Crohn: <span>⚠ vigilar</span></div>
+</div>
+
+<!-- REVIEW BANNER -->
+
+<div class="review-banner" id="review-banner">
+  <div class="review-countdown" id="review-countdown">
+    <span class="review-countdown-icon" id="review-icon">📅</span>
+    <div class="review-countdown-text">
+      <div class="review-countdown-title" id="review-title">Próxima revisión quincenal</div>
+      <div class="review-countdown-sub" id="review-sub">Configura tu fecha de inicio</div>
+    </div>
+    <span class="review-days-badge" id="review-days-badge">—</span>
+  </div>
+  <div id="review-action"></div>
+</div>
+
+<!-- WORKOUT -->
+
+<div id="view-workout">
+  <div class="day-row" id="day-row-workout"></div>
+  <div class="focus-row">
+    <span class="focus-badge" id="focus-badge"></span>
+    <span class="progress-text" id="progress-text"></span>
+  </div>
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
+  <div class="ex-list" id="ex-list"></div>
+  <button class="save-btn" id="save-btn" onclick="saveSession()">Guardar sesión de hoy</button>
+</div>
+
+<!-- CHECK-IN -->
+
+<div id="view-checkin" class="hidden">
+  <div class="section-intro">Rellena tu check-in semanal. Tu entrenador IA analizará la semana y te dará ajustes personalizados.</div>
+  <br>
+  <div class="checkin-wrap">
+    <div class="checkin-card">
+      <div class="checkin-card-header">📊 Check-in semanal</div>
+
+```
+  <div class="checkin-field">
+    <div class="checkin-label">Días entrenados esta semana</div>
+    <div class="checkin-range" id="days-wrap">
+      <button class="checkin-range-btn" onclick="sel('days',this,'0')">0</button>
+      <button class="checkin-range-btn" onclick="sel('days',this,'1')">1</button>
+      <button class="checkin-range-btn" onclick="sel('days',this,'2')">2</button>
+      <button class="checkin-range-btn" onclick="sel('days',this,'3')">3</button>
+      <button class="checkin-range-btn" onclick="sel('days',this,'4')">4</button>
+    </div>
+  </div>
+
+  <div class="checkin-field">
+    <div class="checkin-label">Peso actual (kg)</div>
+    <input class="checkin-input" type="number" id="ci-weight" placeholder="ej. 89.5" step="0.1">
+  </div>
+
+  <div class="checkin-field">
+    <div class="checkin-label">Horas de sueño promedio</div>
+    <div class="checkin-range" id="sleep-wrap">
+      <button class="checkin-range-btn" onclick="sel('sleep',this,'-5h')">-5h</button>
+      <button class="checkin-range-btn" onclick="sel('sleep',this,'5-6h')">5-6h</button>
+      <button class="checkin-range-btn" onclick="sel('sleep',this,'6-7h')">6-7h</button>
+      <button class="checkin-range-btn" onclick="sel('sleep',this,'7-8h')">7-8h</button>
+      <button class="checkin-range-btn" onclick="sel('sleep',this,'+8h')">+8h</button>
+    </div>
+  </div>
+
+  <div class="checkin-field">
+    <div class="checkin-label">Nivel de estrés (1 = relajado · 5 = máximo)</div>
+    <div class="checkin-range" id="stress-wrap">
+      <button class="checkin-range-btn" onclick="sel('stress',this,'1')">1</button>
+      <button class="checkin-range-btn" onclick="sel('stress',this,'2')">2</button>
+      <button class="checkin-range-btn" onclick="sel('stress',this,'3')">3</button>
+      <button class="checkin-range-btn" onclick="sel('stress',this,'4')">4</button>
+      <button class="checkin-range-btn" onclick="sel('stress',this,'5')">5</button>
+    </div>
+  </div>
+
+  <div class="checkin-field">
+    <div class="checkin-label">Estado intestinal (Crohn)</div>
+    <div class="checkin-state-wrap" id="gut-wrap">
+      <button class="checkin-state-btn" onclick="selState('gut',this,'bien')">✅ Bien</button>
+      <button class="checkin-state-btn" onclick="selState('gut',this,'regular')">⚠️ Regular</button>
+      <button class="checkin-state-btn mal" onclick="selState('gut',this,'mal')">🚨 Mal</button>
+    </div>
+  </div>
+
+  <div class="checkin-field">
+    <div class="checkin-label">Turno predominante esta semana</div>
+    <div class="checkin-state-wrap" id="turno-wrap">
+      <button class="checkin-state-btn" onclick="selState('turno',this,'mañana')">🌅 Mañana</button>
+      <button class="checkin-state-btn" onclick="selState('turno',this,'tarde')">🌆 Tarde</button>
+      <button class="checkin-state-btn" onclick="selState('turno',this,'noche')">🌙 Noche</button>
+    </div>
+  </div>
+
+  <div class="checkin-field">
+    <div class="checkin-label">Adherencia a la dieta</div>
+    <div class="checkin-range" id="diet-wrap">
+      <button class="checkin-range-btn" onclick="sel('diet',this,'muy baja')">Muy baja</button>
+      <button class="checkin-range-btn" onclick="sel('diet',this,'baja')">Baja</button>
+      <button class="checkin-range-btn" onclick="sel('diet',this,'media')">Media</button>
+      <button class="checkin-range-btn" onclick="sel('diet',this,'alta')">Alta</button>
+    </div>
+  </div>
+
+  <div class="checkin-field">
+    <div class="checkin-label">Notas libres (opcional)</div>
+    <input class="checkin-input" type="text" id="ci-notes" placeholder="Algo que quieras añadir...">
+  </div>
+</div>
+
+<button class="save-btn" id="checkin-btn" onclick="submitCheckin()">Analizar semana →</button>
+
+<div id="analysis-wrap" class="hidden">
+  <div class="checkin-card">
+    <div class="checkin-card-header">🤖 Tu entrenador</div>
+    <div style="padding:0.9rem">
+      <div id="analysis-content" class="analysis-loading">Analizando tu semana...</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+  <br>
+</div>
+
+<!-- HISTORY -->
+
+<div id="view-history" class="hidden">
+  <div class="day-row" id="day-row-history"></div>
+  <div class="focus-row">
+    <span class="focus-badge" id="history-focus-badge"></span>
+    <span class="progress-text" id="history-session-count"></span>
+  </div>
+  <div id="history-content"></div>
+  <br>
+  <div class="hist-section-label">Check-ins semanales</div>
+  <div style="padding:0 1.25rem" id="checkin-history-list"></div>
+</div>
+
+<!-- DIET VIEW -->
+
+<div id="view-diet" class="hidden">
+  <div class="diet-banner">
+    <div class="diet-macro kc"><div class="mv" id="diet-kcal-display">1.900</div><div class="ml">kcal entreno</div></div>
+    <div class="diet-macro pr"><div class="mv">155g</div><div class="ml">Proteína</div></div>
+    <div class="diet-macro cb"><div class="mv">195g</div><div class="ml">Carbos</div></div>
+    <div class="diet-macro ft"><div class="mv">55g</div><div class="ml">Grasas</div></div>
+  </div>
+  <div class="diet-crohn"><strong>⚠️ Adaptado para Crohn:</strong> Sin lácteos · Verduras siempre cocidas · Sin fritos ni picantes · Fibra soluble · Cocciones suaves.</div>
+  <div class="diet-sch">
+    <span class="diet-sch-lbl">Tu turno (ajusta el orden de comidas):</span>
+    <div class="diet-sch-btns">
+      <button class="diet-sch-btn on" id="diet-btn-tarde" onclick="setDietSch('tarde')">🌆 Tarde</button>
+      <button class="diet-sch-btn" id="diet-btn-manana" onclick="setDietSch('manana')">🌅 Mañana</button>
+    </div>
+  </div>
+  <div class="diet-day-row">
+    <button class="diet-day-btn active" onclick="showDietDay('lun',this)">Lun · Pecho</button>
+    <button class="diet-day-btn" onclick="showDietDay('mar',this)">Mar · Espalda</button>
+    <button class="diet-day-btn rest" onclick="showDietDay('mie',this)">Mié · Descanso</button>
+    <button class="diet-day-btn" onclick="showDietDay('jue',this)">Jue · Hombro</button>
+    <button class="diet-day-btn" onclick="showDietDay('vie',this)">Vie · Piernas</button>
+    <button class="diet-day-btn rest" onclick="showDietDay('sab',this)">Sáb · Libre</button>
+    <button class="diet-day-btn rest" onclick="showDietDay('dom',this)">Dom · Descanso</button>
+  </div>
+
+  <div id="diet-view" class="diet-view">
+
+  <!-- LUNES -->
+
+  <div class="diet-panel on" id="dp-lun">
+    <div class="diet-day-header">
+      <div><div class="diet-day-title">Lunes</div><div class="diet-day-sub">Pecho + Tríceps · Entreno</div></div>
+      <div><span class="diet-badge train">Entreno</span><div class="diet-kcal-badge">1.900</div><div class="diet-kcal-lbl">kcal</div></div>
+    </div>
+    <div class="meal-cards">
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
+        <div class="meal-body">
+          <div class="pre-note-manana">💪 Turno mañana: este desayuno ES tu pre-entreno. Entrena 60 min después.</div>
+          <div class="food-row"><span class="food-name">Avena copos finos cocida en agua</span><span class="food-amt">70 g</span></div>
+          <div class="food-row"><span class="food-name">Claras de huevo a la plancha</span><span class="food-amt">4 claras (130 g)</span></div>
+          <div class="food-row"><span class="food-name">Plátano maduro</span><span class="food-amt">1 med (100 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva virgen extra</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 28g</span><span class="mpill c">C 65g</span><span class="mpill f">G 8g</span></div>
+        </div>
+      </div>
+      <div class="pm-tarde">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Manzana pelada</span><span class="food-amt">1 peq (120 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 22g</span><span class="mpill c">C 42g</span><span class="mpill f">G 2g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">13:30 h</div></div></div><span class="meal-kcal">~540 kcal</span></div>
+          <div class="meal-body">
+            <div class="pre-note-tarde">💪 Turno tarde: esta comida ES tu pre-entreno. Entrena 60 min después.</div>
+            <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">200 g</span></div>
+            <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">200 g</span></div>
+            <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 46g</span><span class="mpill c">C 48g</span><span class="mpill f">G 13g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~320 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Atún al natural escurrido</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 32g</span><span class="mpill c">C 35g</span><span class="mpill f">G 7g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pm-manana">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Pre-entreno (integrado en desayuno)</div><div class="meal-time">8:30 h</div></div></div><span class="meal-kcal">~320 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Atún al natural escurrido</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 32g</span><span class="mpill c">C 35g</span><span class="mpill f">G 7g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Manzana pelada</span><span class="food-amt">1 peq (120 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 22g</span><span class="mpill c">C 42g</span><span class="mpill f">G 2g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">14:00 h</div></div></div><span class="meal-kcal">~540 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">200 g</span></div>
+            <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">200 g</span></div>
+            <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 46g</span><span class="mpill c">C 48g</span><span class="mpill f">G 13g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Merluza al vapor o plancha</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Puré de calabaza (sin leche)</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Biscotes de arroz</span><span class="food-amt">2 uds (40 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 37g</span><span class="mpill c">C 28g</span><span class="mpill f">G 8g</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>🌅 Mañana: el desayuno ya ES tu pre-entreno — entrena 60 min después. 🌆 Tarde: la comida ya ES tu pre-entreno — entrena 60 min después. Bebe 2,5 L de agua.</div>
+  </div>
+
+  <!-- MARTES -->
+
+  <div class="diet-panel" id="dp-mar">
+    <div class="diet-day-header">
+      <div><div class="diet-day-title">Martes</div><div class="diet-day-sub">Espalda + Bíceps · Entreno</div></div>
+      <div><span class="diet-badge train">Entreno</span><div class="diet-kcal-badge">1.900</div><div class="diet-kcal-lbl">kcal</div></div>
+    </div>
+    <div class="meal-cards">
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~420 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Tostadas de pan de arroz</span><span class="food-amt">3 reba (60 g)</span></div>
+          <div class="food-row"><span class="food-name">Huevos revueltos (enteros)</span><span class="food-amt">3 huevos</span></div>
+          <div class="food-row"><span class="food-name">Aguacate</span><span class="food-amt">½ ud (70 g)</span></div>
+          <div class="food-row"><span class="food-name">Pera madura pelada</span><span class="food-amt">1 peq (120 g)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 25g</span><span class="mpill c">C 42g</span><span class="mpill f">G 18g</span></div>
+        </div>
+      </div>
+      <div class="pm-tarde">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pollo cocida en dados</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Pasta de arroz cocida</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 24g</span><span class="mpill c">C 35g</span><span class="mpill f">G 6g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">13:30 h</div></div></div><span class="meal-kcal">~550 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Salmón al horno</span><span class="food-amt">180 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Calabacín al vapor</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 42g</span><span class="mpill c">C 50g</span><span class="mpill f">G 18g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~300 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Plátano</span><span class="food-amt">1 med (100 g)</span></div>
+            <div class="food-row"><span class="food-name">Biscotes de arroz</span><span class="food-amt">3 uds (30 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 26g</span><span class="mpill c">C 40g</span><span class="mpill f">G 3g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pm-manana">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Pre-entreno (integrado en desayuno)</div><div class="meal-time">8:30 h</div></div></div><span class="meal-kcal">~300 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Plátano</span><span class="food-amt">1 med (100 g)</span></div>
+            <div class="food-row"><span class="food-name">Biscotes de arroz</span><span class="food-amt">3 uds (30 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 26g</span><span class="mpill c">C 40g</span><span class="mpill f">G 3g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pollo cocida</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Pasta de arroz cocida</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 24g</span><span class="mpill c">C 35g</span><span class="mpill f">G 6g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">14:00 h</div></div></div><span class="meal-kcal">~550 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Salmón al horno</span><span class="food-amt">180 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Calabacín al vapor</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 42g</span><span class="mpill c">C 50g</span><span class="mpill f">G 18g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~360 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Pechuga de pollo a la plancha</span><span class="food-amt">180 g</span></div>
+          <div class="food-row"><span class="food-name">Puré de patata (sin leche, con AOVE)</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 42g</span><span class="mpill c">C 32g</span><span class="mpill f">G 9g</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>El salmón aporta omega-3 antiinflamatorio, muy beneficioso para el Crohn. El puré de patata sin lácteos es perfecto como carbohidrato nocturno tolerable.</div>
+  </div>
+
+  <!-- MIÉRCOLES -->
+
+  <div class="diet-panel" id="dp-mie">
+    <div class="diet-day-header">
+      <div><div class="diet-day-title">Miércoles</div><div class="diet-day-sub">Día de descanso · Recuperación</div></div>
+      <div><span class="diet-badge rest">Descanso</span><div class="diet-kcal-badge">1.650</div><div class="diet-kcal-lbl">kcal</div></div>
+    </div>
+    <div class="diet-note">⚡ Día de descanso: <strong>–250 kcal</strong> eliminando el snack pre-entreno. Proteínas altas para proteger el músculo.</div>
+    <div class="meal-cards">
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">8:00 h</div></div></div><span class="meal-kcal">~400 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Avena cocida en agua</span><span class="food-amt">60 g</span></div>
+          <div class="food-row"><span class="food-name">Claras de huevo a la plancha</span><span class="food-amt">5 claras (160 g)</span></div>
+          <div class="food-row"><span class="food-name">Manzana pelada</span><span class="food-amt">1 med (150 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 30g</span><span class="mpill c">C 55g</span><span class="mpill f">G 7g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~220 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Biscotes de arroz</span><span class="food-amt">4 uds (40 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 26g</span><span class="mpill c">C 28g</span><span class="mpill f">G 5g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">13:30 h</div></div></div><span class="meal-kcal">~520 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Lomo de cerdo al horno (magro)</span><span class="food-amt">180 g</span></div>
+          <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">180 g</span></div>
+          <div class="food-row"><span class="food-name">Calabacín al vapor</span><span class="food-amt">150 g</span></div>
+          <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 40g</span><span class="mpill c">C 44g</span><span class="mpill f">G 14g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍵</span><div><div class="meal-name">Merienda</div><div class="meal-time">17:00 h</div></div></div><span class="meal-kcal">~180 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Pavo en lonchas</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Plátano pequeño</span><span class="food-amt">80 g</span></div>
+          <div class="meal-macros"><span class="mpill p">P 18g</span><span class="mpill c">C 20g</span><span class="mpill f">G 1g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Dorada al horno con limón</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Espinacas cocidas bien escurridas</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 38g</span><span class="mpill c">C 28g</span><span class="mpill f">G 9g</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>Aprovecha para descansar e hidratarte bien. Las espinacas cocidas son mejor toleradas que crudas en Crohn. Buen día para preparar tuppers.</div>
+  </div>
+
+  <!-- JUEVES -->
+
+  <div class="diet-panel" id="dp-jue">
+    <div class="diet-day-header">
+      <div><div class="diet-day-title">Jueves</div><div class="diet-day-sub">Pecho + Hombro · Entreno</div></div>
+      <div><span class="diet-badge train">Entreno</span><div class="diet-kcal-badge">1.900</div><div class="diet-kcal-lbl">kcal</div></div>
+    </div>
+    <div class="meal-cards">
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Avena cocida en agua</span><span class="food-amt">70 g</span></div>
+          <div class="food-row"><span class="food-name">1 huevo + 2 claras revueltos</span><span class="food-amt">130 g</span></div>
+          <div class="food-row"><span class="food-name">Plátano</span><span class="food-amt">1 med (100 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 27g</span><span class="mpill c">C 62g</span><span class="mpill f">G 11g</span></div>
+        </div>
+      </div>
+      <div class="pm-tarde">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Salmón ahumado</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 22g</span><span class="mpill c">C 36g</span><span class="mpill f">G 8g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">13:30 h</div></div></div><span class="meal-kcal">~550 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">220 g</span></div>
+            <div class="food-row"><span class="food-name">Pasta de arroz cocida</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Calabacín + zanahoria al vapor</span><span class="food-amt">200 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 48g</span><span class="mpill c">C 52g</span><span class="mpill f">G 14g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~310 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">130 g</span></div>
+            <div class="food-row"><span class="food-name">Manzana pelada</span><span class="food-amt">1 peq (100 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 30g</span><span class="mpill c">C 42g</span><span class="mpill f">G 3g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pm-manana">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Pre-entreno (integrado en desayuno)</div><div class="meal-time">8:30 h</div></div></div><span class="meal-kcal">~310 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">130 g</span></div>
+            <div class="food-row"><span class="food-name">Manzana pelada</span><span class="food-amt">1 peq (100 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 30g</span><span class="mpill c">C 42g</span><span class="mpill f">G 3g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Salmón ahumado</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 22g</span><span class="mpill c">C 36g</span><span class="mpill f">G 8g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">14:00 h</div></div></div><span class="meal-kcal">~550 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">220 g</span></div>
+            <div class="food-row"><span class="food-name">Pasta de arroz cocida</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Calabacín + zanahoria al vapor</span><span class="food-amt">200 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 48g</span><span class="mpill c">C 52g</span><span class="mpill f">G 14g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Bacalao al horno</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">150 g</span></div>
+          <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 40g</span><span class="mpill c">C 28g</span><span class="mpill f">G 8g</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>El bacalao es uno de los pescados más digestivos. Solo sal, limón y aceite — sin especias fuertes.</div>
+  </div>
+
+  <!-- VIERNES -->
+
+  <div class="diet-panel" id="dp-vie">
+    <div class="diet-day-header">
+      <div><div class="diet-day-title">Viernes</div><div class="diet-day-sub">Piernas + Core · Entreno</div></div>
+      <div><span class="diet-badge train">Entreno</span><div class="diet-kcal-badge">1.950</div><div class="diet-kcal-lbl">kcal</div></div>
+    </div>
+    <div class="diet-note green">⚡ Día de piernas: <strong>+50 kcal extra</strong> — mayor grupo muscular, mayor gasto energético.</div>
+    <div class="meal-cards">
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Avena cocida en agua</span><span class="food-amt">70 g</span></div>
+          <div class="food-row"><span class="food-name">Claras de huevo a la plancha</span><span class="food-amt">4 claras (130 g)</span></div>
+          <div class="food-row"><span class="food-name">Plátano</span><span class="food-amt">1 med (100 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 28g</span><span class="mpill c">C 65g</span><span class="mpill f">G 8g</span></div>
+        </div>
+      </div>
+      <div class="pm-tarde">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 20g</span><span class="mpill c">C 36g</span><span class="mpill f">G 6g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">13:30 h</div></div></div><span class="meal-kcal">~580 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">220 g</span></div>
+            <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">250 g</span></div>
+            <div class="food-row"><span class="food-name">Calabacín al vapor</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 46g</span><span class="mpill c">C 62g</span><span class="mpill f">G 14g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Pera madura pelada</span><span class="food-amt">1 peq (100 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 30g</span><span class="mpill c">C 50g</span><span class="mpill f">G 3g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="pm-manana">
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Pre-entreno (integrado en desayuno)</div><div class="meal-time">8:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">120 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
+            <div class="food-row"><span class="food-name">Pera madura pelada</span><span class="food-amt">1 peq (100 g)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 30g</span><span class="mpill c">C 50g</span><span class="mpill f">G 3g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 20g</span><span class="mpill c">C 36g</span><span class="mpill f">G 6g</span></div>
+          </div>
+        </div>
+        <div class="meal-card">
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">14:00 h</div></div></div><span class="meal-kcal">~580 kcal</span></div>
+          <div class="meal-body">
+            <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">220 g</span></div>
+            <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">250 g</span></div>
+            <div class="food-row"><span class="food-name">Calabacín + zanahoria al vapor</span><span class="food-amt">230 g</span></div>
+            <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+            <div class="meal-macros"><span class="mpill p">P 46g</span><span class="mpill c">C 62g</span><span class="mpill f">G 14g</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~340 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Pechuga de pollo a la plancha</span><span class="food-amt">180 g</span></div>
+          <div class="food-row"><span class="food-name">Puré de calabaza (con AOVE)</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Espárragos cocidos</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 40g</span><span class="mpill c">C 24g</span><span class="mpill f">G 10g</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>Mayor gasto calórico de la semana. La calabaza tiene fibra soluble, ideal para Crohn. No te saltes el pre-entreno.</div>
+  </div>
+
+  <!-- SÁBADO -->
+
+  <div class="diet-panel" id="dp-sab">
+    <div class="diet-day-header">
+      <div><div class="diet-day-title">Sábado</div><div class="diet-day-sub">Día libre · Descanso activo</div></div>
+      <div><span class="diet-badge rest">Día libre</span><div class="diet-kcal-badge">1.650</div><div class="diet-kcal-lbl">kcal</div></div>
+    </div>
+    <div class="diet-note">🎉 <strong>Día libre:</strong> Más variedad, mismo déficit. Puedes permitirte algún capricho tolerado. Solo recuerda: sin lácteos.</div>
+    <div class="meal-cards">
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">9:00 h</div></div></div><span class="meal-kcal">~390 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Tostadas de pan de arroz</span><span class="food-amt">4 reba (80 g)</span></div>
+          <div class="food-row"><span class="food-name">Huevos revueltos (2 enteros)</span><span class="food-amt">2 huevos</span></div>
+          <div class="food-row"><span class="food-name">Aguacate</span><span class="food-amt">½ ud (70 g)</span></div>
+          <div class="food-row"><span class="food-name">Melocotón o pera maduros</span><span class="food-amt">1 pieza (150 g)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 22g</span><span class="mpill c">C 44g</span><span class="mpill f">G 16g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~200 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Jamón serrano sin grasa visible</span><span class="food-amt">60 g</span></div>
+          <div class="food-row"><span class="food-name">Biscotes de arroz</span><span class="food-amt">4 uds (40 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 18g</span><span class="mpill c">C 26g</span><span class="mpill f">G 5g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🎉</span><div><div class="meal-name">Comida libre</div><div class="meal-time">14:00 h</div></div></div><span class="meal-kcal">~600 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name" style="color:var(--accent2);font-weight:600;">¡Come lo que quieras!</span><span class="food-amt"></span></div>
+          <div class="food-row"><span class="food-name" style="font-size:.74rem;color:var(--muted);">Sin lácteos para respetar el Crohn. Todo lo demás, libre.</span><span class="food-amt"></span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍵</span><div><div class="meal-name">Merienda</div><div class="meal-time">17:00 h</div></div></div><span class="meal-kcal">~190 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Pechuga de pavo</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Plátano pequeño</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Nueces (bien toleradas en remisión)</span><span class="food-amt">15 g</span></div>
+          <div class="meal-macros"><span class="mpill p">P 20g</span><span class="mpill c">C 20g</span><span class="mpill f">G 6g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~340 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Pechuga de pollo a la plancha</span><span class="food-amt">180 g</span></div>
+          <div class="food-row"><span class="food-name">Puré de patata (AOVE, sin leche)</span><span class="food-amt">180 g</span></div>
+          <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 40g</span><span class="mpill c">C 32g</span><span class="mpill f">G 10g</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>Las nueces a 15g son bien toleradas en remisión y aportan omega-3. Si notas molestias, elimínalas. Buen día para batch cooking de la semana.</div>
+  </div>
+
+  <!-- DOMINGO -->
+
+  <div class="diet-panel" id="dp-dom">
+    <div class="diet-day-header">
+      <div><div class="diet-day-title">Domingo</div><div class="diet-day-sub">Día de descanso · Recuperación</div></div>
+      <div><span class="diet-badge rest">Descanso</span><div class="diet-kcal-badge">1.650</div><div class="diet-kcal-lbl">kcal</div></div>
+    </div>
+    <div class="meal-cards">
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">9:00 h</div></div></div><span class="meal-kcal">~400 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Avena cocida en agua</span><span class="food-amt">65 g</span></div>
+          <div class="food-row"><span class="food-name">Claras de huevo a la plancha</span><span class="food-amt">5 claras (160 g)</span></div>
+          <div class="food-row"><span class="food-name">Pera madura pelada</span><span class="food-amt">1 med (130 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 30g</span><span class="mpill c">C 55g</span><span class="mpill f">G 7g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">11:00 h</div></div></div><span class="meal-kcal">~220 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Biscotes de arroz</span><span class="food-amt">4 uds (40 g)</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 26g</span><span class="mpill c">C 28g</span><span class="mpill f">G 5g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍽️</span><div><div class="meal-name">Comida</div><div class="meal-time">14:00 h</div></div></div><span class="meal-kcal">~520 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Muslo de pollo al horno sin piel</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Zanahoria + calabacín cocidos</span><span class="food-amt">180 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 38g</span><span class="mpill c">C 48g</span><span class="mpill f">G 16g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍵</span><div><div class="meal-name">Merienda</div><div class="meal-time">17:00 h</div></div></div><span class="meal-kcal">~180 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Pechuga de pavo</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Plátano pequeño</span><span class="food-amt">80 g</span></div>
+          <div class="meal-macros"><span class="mpill p">P 18g</span><span class="mpill c">C 20g</span><span class="mpill f">G 1g</span></div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-body">
+          <div class="food-row"><span class="food-name">Merluza al vapor</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Espinacas cocidas bien escurridas</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
+          <div class="meal-macros"><span class="mpill p">P 38g</span><span class="mpill c">C 28g</span><span class="mpill f">G 8g</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>Ideal para batch cooking: cuece arroz, pechugas y verduras para los primeros días de la semana. En días de entreno solo calientas y comes.</div>
+  </div>
+
+  </div><!-- end diet-view -->
+</div><!-- end view-diet -->
+
+<!-- TIMER -->
+
+<div id="timer-overlay">
+  <div class="timer-label">Descanso<span id="timer-display">1:30</span></div>
+  <div class="timer-bar-wrap">
+    <div class="timer-bar-bg"><div class="timer-bar-fill" id="timer-bar" style="width:100%"></div></div>
+  </div>
+  <button class="timer-cancel" onclick="cancelTimer()">✕ Saltar</button>
+</div>
+
+<script>
+const ROUTINE = [
+  {
+    id:"dia1", day:"Día 1", label:"Lunes", focus:"Pecho + Tríceps",
+    sections:[
+      { name:"Pecho", exercises:[
+        { id:"d1e1", name:"Press inclinado con mancuernas",        sets:4, reps:"8–10",  rest:90 },
+        { id:"d1e2", name:"Press plano con mancuernas",            sets:4, reps:"10–12", rest:90 },
+        { id:"d1e3", name:"Peck deck (contractor)",                sets:3, reps:"12–15", rest:60 },
+        { id:"d1e4", name:"Crossover en polea baja (pecho inf.)",  sets:3, reps:"12–15", rest:60 },
+      ]},
+      { name:"Tríceps", exercises:[
+        { id:"d1e5", name:"Press francés con barra EZ",            sets:3, reps:"10–12", rest:60 },
+        { id:"d1e6", name:"Tríceps en polea (cuerda)",             sets:3, reps:"12–15", rest:60 },
+        { id:"d1e7", name:"Tríceps polea inversa (ag. supino)",    sets:3, reps:"12–15", rest:60 },
+      ]},
+      { name:"Cardio", exercises:[
+        { id:"d1e8", name:"HIIT en bicicleta o cinta", sets:0, reps:"15 min", isCardio:true },
+      ]},
+    ],
+  },
+  {
+    id:"dia2", day:"Día 2", label:"Martes", focus:"Espalda + Bíceps",
+    sections:[
+      { name:"Espalda", exercises:[
+        { id:"d2e1", name:"Jalón al pecho en máquina",       sets:4, reps:"8–10",  rest:90 },
+        { id:"d2e2", name:"Remo en máquina martillo",        sets:3, reps:"10–12", rest:90 },
+        { id:"d2e3", name:"Remo en polea sentado",           sets:3, reps:"12",    rest:90 },
+        { id:"d2e4", name:"Pull-over en polea alta",         sets:3, reps:"12–15", rest:60 },
+      ]},
+      { name:"Bíceps", exercises:[
+        { id:"d2e5", name:"Curl bíceps con barra",           sets:3, reps:"10–12", rest:60 },
+        { id:"d2e6", name:"Curl martillo con mancuernas",    sets:3, reps:"12",    rest:60 },
+        { id:"d2e7", name:"Curl en banco Scott",             sets:3, reps:"12–15", rest:60 },
+      ]},
+      { name:"Cardio", exercises:[
+        { id:"d2e8", name:"Elíptica resistencia moderada (nivel 6–8)", sets:0, reps:"20 min", isCardio:true },
+      ]},
+    ],
+  },
+  {
+    id:"dia3", day:"Día 3", label:"Jueves", focus:"Pecho + Hombro",
+    sections:[
+      { name:"Pecho (refuerzo)", exercises:[
+        { id:"d3e1", name:"Press inclinado mancuernas ag. neutro",  sets:4, reps:"8–10",  rest:90 },
+        { id:"d3e2", name:"Crossover en polea alta",                sets:3, reps:"12–15", rest:60 },
+        { id:"d3e3", name:"Aperturas con mancuernas plano",         sets:3, reps:"12–15", rest:60 },
+      ]},
+      { name:"Hombro", exercises:[
+        { id:"d3e4", name:"Press militar con mancuernas",           sets:4, reps:"8–10",  rest:90 },
+        { id:"d3e5", name:"Elevaciones laterales",                  sets:3, reps:"15",    rest:60 },
+        { id:"d3e6", name:"Hombro posterior en polea cruzada",      sets:3, reps:"12–15", rest:60 },
+        { id:"d3e7", name:"Face pull en polea",                     sets:3, reps:"15",    rest:60 },
+      ]},
+      { name:"Cardio", exercises:[
+        { id:"d3e8", name:"HIIT en elíptica", sets:0, reps:"15 min", isCardio:true },
+      ]},
+    ],
+  },
+  {
+    id:"dia4", day:"Día 4", label:"Viernes", focus:"Piernas + Core",
+    sections:[
+      { name:"Cuádriceps & Glúteos", exercises:[
+        { id:"d4e1", name:"Prensa de piernas (pie alto — glúteo)", sets:4, reps:"8–10", rest:90 },
+        { id:"d4e2", name:"Hack squat en máquina",                 sets:3, reps:"12",   rest:90 },
+        { id:"d4e3", name:"Extensiones de cuádriceps",             sets:3, reps:"15",   rest:60 },
+        { id:"d4e4", name:"Abductora (máquina)",                   sets:3, reps:"15",   rest:60 },
+      ]},
+      { name:"Isquios & Pantorrillas", exercises:[
+        { id:"d4e5", name:"Curl de piernas tumbado",               sets:3, reps:"12", rest:60 },
+        { id:"d4e6", name:"Pantorrillas de pie en máquina",        sets:3, reps:"20", rest:45 },
+      ]},
+      { name:"Core", exercises:[
+        { id:"d4e7", name:"Circuito: plancha + crunch + mountain climbers", sets:3, reps:"×3 ejercicios", isCardio:true },
+      ]},
+      { name:"Cardio", exercises:[
+        { id:"d4e8", name:"Cardio suave (elíptica o cinta)", sets:0, reps:"20 min", isCardio:true },
+      ]},
+    ],
+  },
+];
+
+let currentView='workout', activeDay=0, historyDay=0, sessionData={}, history={}, checkinHistory=[];
+let timerInterval=null, timerTotal=0, timerLeft=0;
+let ciVals={days:null,sleep:null,stress:null,gut:null,turno:null,diet:null};
+
+function loadData(){
+  try{const h=localStorage.getItem('gym_history');if(h)history=JSON.parse(h);}catch(e){}
+  try{const c=localStorage.getItem('gym_checkins');if(c)checkinHistory=JSON.parse(c);}catch(e){}
+}
+function saveHistory(){try{localStorage.setItem('gym_history',JSON.stringify(history));}catch(e){}}
+function saveCheckins(){try{localStorage.setItem('gym_checkins',JSON.stringify(checkinHistory));}catch(e){}}
+function today(){return new Date().toISOString().split('T')[0];}
+function fmtDate(s){const d=new Date(s+'T12:00:00');return d.toLocaleDateString('es-ES',{weekday:'short',day:'numeric',month:'short'});}
+function rstLbl(s){return s>=60?Math.floor(s/60)+'m '+(s%60?s%60+'s':''):s+'s';}
+
+function getLastSets(dayId, exId){
+  // Devuelve las series de la sesión anterior (no la de hoy)
+  const sessions=history[dayId]||[];
+  const t=today();
+  const prev=sessions.find(s=>s.date!==t);
+  if(!prev||!prev.data[exId]) return [];
+  return Object.values(prev.data[exId]).filter(s=>s.weight||s.reps);
+}
+
+function getWeightTrend(dayId, exId){
+  // Compara peso medio de sesión actual vs anterior
+  const sessions=history[dayId]||[];
+  const t=today();
+  const prev=sessions.find(s=>s.date!==t);
+  const curr=sessions.find(s=>s.date===t);
+  if(!prev||!curr) return null;
+  const avg=data=>{ const sets=Object.values(data||{}).filter(s=>parseFloat(s.weight)>0); if(!sets.length)return 0; return sets.reduce((a,s)=>a+parseFloat(s.weight),0)/sets.length; };
+  const ap=avg(prev.data[exId]), ac=avg(curr.data[exId]);
+  if(!ap||!ac) return null;
+  if(ac>ap+0.5) return 'up';
+  if(ac<ap-0.5) return 'down';
+  return 'eq';
+}
+
+function setView(v){
+  currentView=v;
+  ['workout','diet','checkin','history'].forEach(id=>{
+    document.getElementById('view-'+id).classList.toggle('hidden',v!==id);
+    document.getElementById('tab-'+id).classList.toggle('active',v===id);
+  });
+  if(v==='history')renderHistory();
+}
+
+function showDietDay(id, btn){
+  document.querySelectorAll('.diet-panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.diet-day-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('dp-'+id).classList.add('on');
+  btn.classList.add('active');
+}
+
+function setDietSch(sch){
+  const dv=document.getElementById('diet-view');
+  dv.classList.toggle('manana', sch==='manana');
+  document.getElementById('diet-btn-tarde').classList.toggle('on', sch==='tarde');
+  document.getElementById('diet-btn-manana').classList.toggle('on', sch==='manana');
+}
+
+function buildDayRows(){
+  ['workout','history'].forEach(view=>{
+    const c=document.getElementById('day-row-'+view);
+    c.innerHTML='';
+    ROUTINE.forEach((d,i)=>{
+      const btn=document.createElement('button');
+      btn.className='day-btn'+((view==='workout'?activeDay:historyDay)===i?' active':'');
+      btn.innerHTML=`<span class="day-btn-num">${d.day}</span><span class="day-btn-lbl">${d.label}</span>`;
+      btn.onclick=()=>{
+        if(view==='workout'){activeDay=i;renderWorkout();}
+        else{historyDay=i;renderHistory();}
+        c.querySelectorAll('.day-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+      };
+      c.appendChild(btn);
+    });
+  });
+}
+
+function renderWorkout(){
+  const day=ROUTINE[activeDay],dayId=day.id;
+  document.getElementById('focus-badge').textContent=day.focus;
+  const nc=day.sections.flatMap(s=>s.exercises).filter(e=>!e.isCardio);
+  const filled=nc.filter(e=>sessionData[dayId]?.[e.id]).length;
+  const pct=nc.length>0?Math.round(filled/nc.length*100):0;
+  document.getElementById('progress-text').textContent=`${filled}/${nc.length} ejercicios`;
+  document.getElementById('progress-bar').style.width=pct+'%';
+  const list=document.getElementById('ex-list');
+  list.innerHTML='';
+  day.sections.forEach(section=>{
+    const wrap=document.createElement('div');
+    wrap.className='section-wrap';
+    const lbl=document.createElement('div');
+    lbl.className='section-label';
+    lbl.textContent=section.name;
+    wrap.appendChild(lbl);
+    section.exercises.forEach(ex=>{
+      const card=document.createElement('div');
+      card.className='ex-card';
+      const hdr=document.createElement('div');
+      hdr.className='ex-header';
+      const rt=ex.rest?`<span class="ex-rest">⏱ ${rstLbl(ex.rest)} descanso</span>`:'';
+      hdr.innerHTML=`<span class="ex-name">${ex.name}</span><div class="ex-meta"><span class="ex-reps">${ex.reps}</span>${rt}</div>`;
+      card.appendChild(hdr);
+      if(!ex.isCardio&&ex.sets>0){
+        // ÚLTIMA SESIÓN
+        const lastSets=getLastSets(dayId,ex.id);
+        if(lastSets.length>0){
+          const ls=document.createElement('div');
+          ls.className='last-session';
+          const lslbl=document.createElement('span');
+          lslbl.className='last-session-label';
+          lslbl.textContent='Última:';
+          ls.appendChild(lslbl);
+          const chipsWrap=document.createElement('div');
+          chipsWrap.className='last-session-chips';
+          lastSets.forEach((s,idx)=>{
+            const chip=document.createElement('span');
+            chip.className='last-chip';
+            const wTxt=s.weight?s.weight+'kg':'—';
+            const rTxt=s.reps?s.reps+'r':'—';
+            chip.textContent=`${idx+1}. ${wTxt} × ${rTxt}`;
+            chipsWrap.appendChild(chip);
+          });
+          // Tendencia de peso
+          const trend=getWeightTrend(dayId,ex.id);
+          if(trend){
+            const t=document.createElement('span');
+            if(trend==='up'){t.className='trend-up';t.textContent='↑ más peso';}
+            else if(trend==='down'){t.className='trend-down';t.textContent='↓ menos peso';}
+            else{t.className='trend-eq';t.textContent='= mismo peso';}
+            ls.appendChild(chipsWrap);
+            ls.appendChild(t);
+          } else {
+            ls.appendChild(chipsWrap);
+          }
+          card.appendChild(ls);
+        }
+
+        const grid=document.createElement('div');
+        grid.className='sets-grid';
+        const sh=document.createElement('div');
+        sh.className='sets-header';
+        sh.innerHTML='<span class="set-label">Serie</span><span class="set-label">Peso (kg)</span><span class="set-label">Reps</span>';
+        grid.appendChild(sh);
+        for(let i=0;i<ex.sets;i++){
+          const row=document.createElement('div');
+          row.className='set-row';
+          const num=document.createElement('span');
+          num.className='set-num';
+          num.textContent=i+1;
+          row.appendChild(num);
+          ['weight','reps'].forEach(field=>{
+            const inp=document.createElement('input');
+            inp.type='number';
+            inp.inputMode=field==='weight'?'decimal':'numeric';
+            inp.placeholder='—';
+            inp.value=sessionData[dayId]?.[ex.id]?.[i]?.[field]??'';
+            inp.addEventListener('input',e=>{
+              if(!sessionData[dayId])sessionData[dayId]={};
+              if(!sessionData[dayId][ex.id])sessionData[dayId][ex.id]={};
+              if(!sessionData[dayId][ex.id][i])sessionData[dayId][ex.id][i]={};
+              sessionData[dayId][ex.id][i][field]=e.target.value;
+              updProg();
+              const b=document.getElementById('save-btn');
+              b.classList.remove('done');
+              b.textContent='Guardar sesión de hoy';
+            });
+            row.appendChild(inp);
+          });
+          grid.appendChild(row);
+        }
+        card.appendChild(grid);
+        if(ex.rest){
+          const bw=document.createElement('div');
+          bw.className='rest-btn-wrap';
+          const rb=document.createElement('button');
+          rb.className='rest-btn';
+          rb.textContent=`⏱ Iniciar descanso · ${rstLbl(ex.rest)}`;
+          rb.onclick=()=>startTimer(ex.rest);
+          bw.appendChild(rb);
+          card.appendChild(bw);
+        }
+      } else if(ex.isCardio){
+        const n=document.createElement('div');
+        n.className='cardio-note';
+        n.textContent='✓ Cardio — marca como hecho al terminar';
+        card.appendChild(n);
+      }
+      wrap.appendChild(card);
+    });
+    list.appendChild(wrap);
+  });
+}
+
+function updProg(){
+  const day=ROUTINE[activeDay],dayId=day.id;
+  const nc=day.sections.flatMap(s=>s.exercises).filter(e=>!e.isCardio);
+  const filled=nc.filter(e=>sessionData[dayId]?.[e.id]).length;
+  const pct=nc.length>0?Math.round(filled/nc.length*100):0;
+  document.getElementById('progress-text').textContent=`${filled}/${nc.length} ejercicios`;
+  document.getElementById('progress-bar').style.width=pct+'%';
+}
+
+function saveSession(){
+  const dayId=ROUTINE[activeDay].id;
+  const entry={date:today(),data:sessionData[dayId]||{}};
+  if(!history[dayId])history[dayId]=[];
+  history[dayId]=[entry,...history[dayId].slice(0,29)];
+  saveHistory();
+  const btn=document.getElementById('save-btn');
+  btn.classList.add('done');
+  btn.textContent='✓ Sesión guardada';
+  setTimeout(()=>{btn.classList.remove('done');btn.textContent='Guardar sesión de hoy';},2500);
+}
+
+// CHECK-IN
+function sel(key,btn,val){
+  btn.parentElement.querySelectorAll('.checkin-range-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  ciVals[key]=val;
+}
+function selState(key,btn,val){
+  btn.parentElement.querySelectorAll('.checkin-state-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  ciVals[key]=val;
+}
+
+async function submitCheckin(){
+  const weight=document.getElementById('ci-weight').value;
+  const notes=document.getElementById('ci-notes').value;
+  const entry={
+    date:today(), weight:weight||'—',
+    days:ciVals.days||'—', sleep:ciVals.sleep||'—',
+    stress:ciVals.stress||'—', gut:ciVals.gut||'—',
+    turno:ciVals.turno||'—', diet:ciVals.diet||'—',
+    notes:notes||''
+  };
+  checkinHistory=[entry,...checkinHistory.slice(0,19)];
+  saveCheckins();
+
+  document.getElementById('analysis-wrap').classList.remove('hidden');
+  document.getElementById('analysis-content').className='analysis-loading';
+  document.getElementById('analysis-content').textContent='Analizando tu semana...';
+  const btn=document.getElementById('checkin-btn');
+  btn.disabled=true; btn.textContent='Analizando...';
+
+  const prev=checkinHistory.slice(1,4).map(c=>
+    `- ${c.date}: peso ${c.weight}kg, días ${c.days}, sueño ${c.sleep}, estrés ${c.stress}/5, intestino ${c.gut}, dieta ${c.diet}`
+  ).join('\n')||'Sin historial previo';
+
+  const prompt=`Eres un entrenador personal experto y cercano. El usuario tiene este perfil:
+- Hombre, 35-45 años, 90 kg, 1,85 m. Objetivo: perder grasa.
+- Enfermedad de Crohn activa (PRIORIDAD en tus recomendaciones)
+- Trabaja a turnos (mañana/tarde/noche ocasional), mayormente sentado
+- Fase inicial con la rutina
+- Rutina 4 días: Lunes Pecho+Tríceps | Martes Espalda+Bíceps | Jueves Pecho+Hombro | Viernes Piernas+Core
+- En pecho solo usa mancuernas y poleas. En piernas solo máquinas.
+
+Check-in semana actual:
+- Días entrenados: ${entry.days}
+- Peso: ${entry.weight} kg
+- Sueño promedio: ${entry.sleep}
+- Estrés: ${entry.stress}/5
+- Estado intestinal: ${entry.gut}
+- Turno predominante: ${entry.turno}
+- Adherencia dieta: ${entry.diet}
+- Notas: ${entry.notes||'ninguna'}
+
+Semanas anteriores:
+${prev}
+
+Escribe un análisis breve como entrenador personal (máximo 180 palabras). Incluye:
+1. Valoración honesta de la semana (2 frases)
+2. Lo más destacable positivo o negativo
+3. Un ajuste concreto y específico para la próxima semana según sus datos reales
+4. Una frase de motivación real, no genérica
+
+Si el intestino está mal o regular, ponlo como prioridad absoluta y reduce carga. Sé directo y humano, no genérico.`;
+
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:1000,
+        messages:[{role:"user",content:prompt}]
+      })
+    });
+    const data=await res.json();
+    const text=data.content?.map(b=>b.text||'').join('')||'No se pudo obtener el análisis.';
+    document.getElementById('analysis-content').className='analysis-box';
+    document.getElementById('analysis-content').innerHTML=`<div class="analysis-tag">SEMANA ${fmtDate(entry.date)}</div>\n${text}`;
+  }catch(e){
+    document.getElementById('analysis-content').className='analysis-box';
+    document.getElementById('analysis-content').textContent='Error de conexión. Inténtalo de nuevo.';
+  }
+  btn.disabled=false; btn.textContent='Analizar semana →';
+}
+
+// TIMER
+function startTimer(s){
+  cancelTimer();
+  timerTotal=s; timerLeft=s;
+  document.getElementById('timer-overlay').classList.add('show');
+  updTimer();
+  timerInterval=setInterval(()=>{
+    timerLeft--;
+    updTimer();
+    if(timerLeft<=0){
+      cancelTimer();
+      try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){}
+    }
+  },1000);
+}
+function updTimer(){
+  const m=Math.floor(timerLeft/60),s=timerLeft%60;
+  document.getElementById('timer-display').textContent=m+':'+(s<10?'0':'')+s;
+  const pct=timerTotal>0?(timerLeft/timerTotal*100):0;
+  document.getElementById('timer-bar').style.width=pct+'%';
+  const color=timerLeft<=10?'#ff4d00':'#e8ff3a';
+  document.getElementById('timer-bar').style.background=color;
+  document.getElementById('timer-display').style.color=color;
+}
+function cancelTimer(){
+  if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+  document.getElementById('timer-overlay').classList.remove('show');
+}
+
+// HISTORY
+function renderHistory(){
+  const day=ROUTINE[historyDay];
+  document.getElementById('history-focus-badge').textContent=day.focus;
+  const sessions=history[day.id]||[];
+  document.getElementById('history-session-count').textContent=`${sessions.length} sesiones`;
+  const container=document.getElementById('history-content');
+  container.innerHTML='';
+  if(sessions.length===0){
+    container.innerHTML='<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">Aún no hay sesiones guardadas para este día.</div></div>';
+  } else {
+    const list=document.createElement('div');
+    list.className='history-list';
+    const allEx=day.sections.flatMap(s=>s.exercises).filter(e=>!e.isCardio);
+    sessions.forEach(session=>{
+      const card=document.createElement('div');
+      card.className='history-card';
+      const dd=document.createElement('div');
+      dd.className='history-date';
+      dd.textContent=fmtDate(session.date);
+      card.appendChild(dd);
+      allEx.forEach(ex=>{
+        const exData=session.data?.[ex.id];
+        if(!exData)return;
+        const sets=Object.values(exData).filter(s=>s.weight||s.reps);
+        if(!sets.length)return;
+        const ed=document.createElement('div');
+        ed.className='history-ex';
+        ed.innerHTML=`<div class="history-ex-name">${ex.name}</div>`;
+        const rd=document.createElement('div');
+        rd.className='history-set-row';
+        sets.forEach(s=>{
+          const chip=document.createElement('span');
+          chip.className='history-chip';
+          chip.textContent=`${s.weight?s.weight+'kg':'—'} × ${s.reps||'—'}`;
+          rd.appendChild(chip);
+        });
+        ed.appendChild(rd);
+        card.appendChild(ed);
+      });
+      list.appendChild(card);
+    });
+    container.appendChild(list);
+  }
+
+  const cil=document.getElementById('checkin-history-list');
+  cil.innerHTML='';
+  if(!checkinHistory.length){
+    cil.innerHTML='<div class="empty-text" style="color:#444;font-size:0.8rem;padding:0.5rem 0">Sin check-ins registrados aún.</div>';
+  } else {
+    checkinHistory.forEach(c=>{
+      const card=document.createElement('div');
+      card.className='ci-hist-card';
+      card.innerHTML=`
+        <div class="ci-hist-date">${fmtDate(c.date)}</div>
+        <div class="ci-hist-row"><span class="ci-hist-key">Peso</span><span class="ci-hist-val">${c.weight} kg</span></div>
+        <div class="ci-hist-row"><span class="ci-hist-key">Días entrenados</span><span class="ci-hist-val">${c.days}</span></div>
+        <div class="ci-hist-row"><span class="ci-hist-key">Sueño</span><span class="ci-hist-val">${c.sleep}</span></div>
+        <div class="ci-hist-row"><span class="ci-hist-key">Estrés</span><span class="ci-hist-val">${c.stress}/5</span></div>
+        <div class="ci-hist-row"><span class="ci-hist-key">Intestino</span><span class="ci-hist-val">${c.gut}</span></div>
+        <div class="ci-hist-row"><span class="ci-hist-key">Turno</span><span class="ci-hist-val">${c.turno}</span></div>
+        <div class="ci-hist-row"><span class="ci-hist-key">Dieta</span><span class="ci-hist-val">${c.diet}</span></div>
+        ${c.notes?`<div class="ci-hist-row"><span class="ci-hist-key">Notas</span><span class="ci-hist-val">${c.notes}</span></div>`:''}
+      `;
+      cil.appendChild(card);
+    });
+  }
+}
+
+// ── REVISIÓN QUINCENAL ──────────────────────────────────────────
+function initReviewBanner(){
+  let startDate = localStorage.getItem('gym_start_date');
+  if(!startDate){
+    // Primera vez: preguntar si empiezan hoy
+    const action = document.getElementById('review-action');
+    document.getElementById('review-title').textContent = '¿Cuándo empiezas?';
+    document.getElementById('review-sub').textContent = 'Pulsa para fijar la fecha de inicio';
+    document.getElementById('review-icon').textContent = '🚀';
+    document.getElementById('review-days-badge').textContent = '';
+    action.innerHTML = `<button class="review-btn" onclick="setStartDate()">Empiezo hoy →</button>`;
+    return;
+  }
+  renderReviewBanner(startDate);
+}
+
+function setStartDate(){
+  localStorage.setItem('gym_start_date', today());
+  renderReviewBanner(today());
+}
+
+function renderReviewBanner(startDate){
+  const start = new Date(startDate+'T12:00:00');
+  const now = new Date();
+  const daysSinceStart = Math.floor((now - start) / (1000*60*60*24));
+  const cycleDay = daysSinceStart % 14;
+  const daysLeft = 14 - cycleDay;
+  const cycleNum = Math.floor(daysSinceStart / 14) + 1;
+  const action = document.getElementById('review-action');
+  const banner = document.getElementById('review-banner');
+
+  if(daysLeft <= 2){
+    // Revisión inminente o hoy
+    banner.classList.add('review-ready');
+    document.getElementById('review-icon').textContent = '🔔';
+    document.getElementById('review-title').textContent = daysLeft === 0 ? '¡Toca revisión quincenal hoy!' : `Revisión en ${daysLeft} día${daysLeft>1?'s':''}`;
+    document.getElementById('review-sub').textContent = `Ciclo ${cycleNum} · Día ${daysSinceStart+1} de tu plan`;
+    document.getElementById('review-days-badge').textContent = daysLeft === 0 ? 'HOY' : daysLeft+'d';
+    document.getElementById('review-days-badge').className = 'review-days-badge urgent';
+
+    // Mostrar resultado guardado si existe
+    const savedReview = localStorage.getItem(`gym_review_${cycleNum}`);
+    action.innerHTML = `
+      <button class="review-btn" id="review-run-btn" onclick="runBiweeklyReview(${cycleNum})">🤖 Lanzar revisión completa →</button>
+      <div id="review-result-wrap" class="${savedReview?'review-result':'hidden'}">
+        ${savedReview ? `<div class="review-result-header">Revisión ciclo ${cycleNum}</div><div class="review-result-body"><span class="review-result-tag">REVISIÓN QUINCENAL</span>\n${savedReview}</div>` : ''}
+      </div>`;
+  } else {
+    banner.classList.remove('review-ready');
+    document.getElementById('review-icon').textContent = '📅';
+    document.getElementById('review-title').textContent = `Próxima revisión — Ciclo ${cycleNum}`;
+    document.getElementById('review-sub').textContent = `Día ${daysSinceStart+1} · Llevas ${daysSinceStart} días en el plan`;
+    document.getElementById('review-days-badge').textContent = daysLeft+'d';
+    document.getElementById('review-days-badge').className = 'review-days-badge';
+    action.innerHTML = '';
+  }
+}
+
+async function runBiweeklyReview(cycleNum){
+  const btn = document.getElementById('review-run-btn');
+  btn.disabled = true;
+  btn.textContent = 'Analizando 2 semanas de datos...';
+
+  const wrap = document.getElementById('review-result-wrap');
+  wrap.className = 'review-result';
+  wrap.innerHTML = `<div class="review-result-header">Revisión ciclo ${cycleNum}</div><div class="review-result-body analysis-loading">Procesando todo tu historial...</div>`;
+
+  // Recopilar TODO el historial de entrenamientos
+  const workoutSummary = ROUTINE.map(day => {
+    const sessions = (history[day.id]||[]).slice(0,14);
+    if(!sessions.length) return `${day.day} (${day.focus}): sin sesiones registradas`;
+    const allEx = day.sections.flatMap(s=>s.exercises).filter(e=>!e.isCardio);
+    const exSummaries = allEx.map(ex => {
+      const allSets = sessions.flatMap(s => Object.values(s.data?.[ex.id]||{}).filter(set=>parseFloat(set.weight)>0));
+      if(!allSets.length) return null;
+      const maxWeight = Math.max(...allSets.map(s=>parseFloat(s.weight)));
+      const firstSession = sessions[sessions.length-1];
+      const firstSets = Object.values(firstSession.data?.[ex.id]||{}).filter(s=>parseFloat(s.weight)>0);
+      const firstMax = firstSets.length ? Math.max(...firstSets.map(s=>parseFloat(s.weight))) : 0;
+      const diff = firstMax > 0 ? (maxWeight - firstMax).toFixed(1) : null;
+      return `  · ${ex.name}: max ${maxWeight}kg${diff!==null&&diff>0?' (+'+diff+'kg desde inicio)':diff!==null&&diff<0?' ('+diff+'kg)':''}`;
+    }).filter(Boolean);
+    return `${day.day} (${day.focus}) — ${sessions.length} sesiones:\n${exSummaries.join('\n')||'  · Sin datos de pesos'}`;
+  }).join('\n\n');
+
+  // Recopilar check-ins de las últimas 2 semanas
+  const recentCheckins = checkinHistory.slice(0,2).map((c,i)=>
+    `Semana ${i+1}: peso ${c.weight}kg, entrenos ${c.days}/4, sueño ${c.sleep}, estrés ${c.stress}/5, intestino ${c.gut}, dieta ${c.diet}${c.notes?', notas: '+c.notes:''}`
+  ).join('\n') || 'Sin check-ins registrados';
+
+  const weightProgress = checkinHistory.length >= 2
+    ? `Peso inicial ciclo: ${checkinHistory[checkinHistory.length-1]?.weight||'—'}kg → Peso actual: ${checkinHistory[0]?.weight||'—'}kg`
+    : checkinHistory.length === 1
+    ? `Peso registrado: ${checkinHistory[0].weight}kg`
+    : 'Sin registros de peso';
+
+  const prompt = `Eres un entrenador personal experto. Estás haciendo la REVISIÓN QUINCENAL completa (ciclo ${cycleNum}) de tu atleta.
+
+PERFIL:
+- Hombre, 35-45 años. Peso inicial: 90kg, talla 1,85m
+- Objetivo: pérdida de grasa con preservación muscular
+- Enfermedad de Crohn (prioritario en todas las recomendaciones)
+- Trabaja a turnos, fase inicial del plan
+- Rutina 4 días: Lunes Pecho+Tríceps, Martes Espalda+Bíceps, Jueves Pecho+Hombro, Viernes Piernas+Core
+- Dieta: 1.900 kcal entreno / 1.650 kcal descanso. Sin lácteos. Adaptada para Crohn.
+
+PROGRESO DE PESO:
+${weightProgress}
+
+CHECK-INS DE LAS 2 SEMANAS:
+${recentCheckins}
+
+HISTORIAL DE ENTRENAMIENTOS:
+${workoutSummary}
+
+Escribe una revisión quincenal completa y estructurada (máximo 350 palabras) con estas secciones:
+1. BALANCE GENERAL — cómo ha ido el ciclo en conjunto
+2. PROGRESIÓN DE FUERZA — qué ejercicios han mejorado, cuáles no y por qué
+3. PESO Y COMPOSICIÓN — tendencia del peso, si va en línea con el objetivo
+4. CROHN Y RECUPERACIÓN — cómo ha afectado el estado intestinal al rendimiento
+5. AJUSTES PARA EL PRÓXIMO CICLO — cambios concretos en rutina o dieta (máximo 3 cambios, muy específicos)
+6. OBJETIVO PRÓXIMAS 2 SEMANAS — una frase clara y motivadora
+
+Sé directo, honesto y específico. Usa los datos reales. No seas genérico.`;
+
+  try{
+    const res = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:1500,
+        messages:[{role:"user",content:prompt}]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(b=>b.text||'').join('')||'Error al obtener el análisis.';
+    localStorage.setItem(`gym_review_${cycleNum}`, text);
+    wrap.innerHTML = `<div class="review-result-header">Revisión ciclo ${cycleNum}</div><div class="review-result-body"><span class="review-result-tag">REVISIÓN QUINCENAL</span>\n${text}</div>`;
+  }catch(e){
+    wrap.innerHTML = `<div class="review-result-body" style="padding:0.9rem;color:var(--accent2)">Error de conexión. Inténtalo de nuevo.</div>`;
+  }
+  btn.disabled = false;
+  btn.textContent = '🔄 Regenerar revisión';
+}
+
+loadData();
+buildDayRows();
+renderWorkout();
+initReviewBanner();
+</script>
+
+</body>
+</html>
