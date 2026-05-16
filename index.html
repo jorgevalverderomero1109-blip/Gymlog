@@ -21,29 +21,29 @@
   input,button,textarea,select{color-scheme:dark;background-color:inherit;}
 
 .header{display:flex;justify-content:space-between;align-items:flex-end;padding:1.4rem 1.25rem 1rem;border-bottom:1px solid var(–border);}
-.header-tag{font-size:0.58rem;letter-spacing:0.22em;color:var(–accent2);font-weight:700;text-transform:uppercase;margin-bottom:2px;}
+.header-tag{font-size:0.58rem;letter-spacing:0.22em;color:#ff4d00;font-weight:700;text-transform:uppercase;margin-bottom:2px;}
 .header-title{font-family:‘Bebas Neue’,sans-serif;font-size:2rem;letter-spacing:0.05em;line-height:1;}
-.header-title span{color:var(–accent);}
+.header-title span{color:#e8ff3a;}
 .tabs{display:flex;gap:4px;}
-.tab-btn{background:transparent;border:1px solid var(–border2);border-radius:4px;color:var(–muted);font-size:0.72rem;font-family:inherit;padding:6px 10px;cursor:pointer;transition:all 0.15s;}
-.tab-btn.active{background:var(–accent);border-color:var(–accent);color:#0a0a0a;font-weight:600;}
+.tab-btn{background:transparent;border:1px solid #2a2a2a;border-radius:4px;color:#888;font-size:0.72rem;font-family:inherit;padding:6px 10px;cursor:pointer;transition:all 0.15s;}
+.tab-btn.active{background:#e8ff3a;border-color:#e8ff3a;color:#0a0a0a;font-weight:600;}
 
 .profile-bar{display:flex;gap:6px;padding:0.6rem 1.25rem;flex-wrap:wrap;}
 .profile-chip{background:#1a1a1a;border:1px solid var(–border2);border-radius:3px;padding:3px 8px;font-size:0.6rem;color:#888;letter-spacing:0.04em;}
-.profile-chip span{color:var(–accent);font-weight:600;}
+.profile-chip span{color:#e8ff3a;font-weight:600;}
 
 .day-row{display:flex;gap:8px;padding:1rem 1.25rem 0.5rem;overflow-x:auto;scrollbar-width:none;}
 .day-row::-webkit-scrollbar{display:none;}
 .day-btn{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;background:var(–surface);border:1px solid #222;border-radius:6px;padding:8px 14px;cursor:pointer;transition:all 0.15s;gap:2px;}
-.day-btn.active{border-color:var(–accent);}
-.day-btn-num{font-family:‘Bebas Neue’,sans-serif;font-size:1rem;color:var(–accent);letter-spacing:0.05em;}
-.day-btn-lbl{font-size:0.58rem;color:var(–muted);text-transform:uppercase;letter-spacing:0.1em;}
+.day-btn.active{border-color:#e8ff3a;}
+.day-btn-num{font-family:‘Bebas Neue’,sans-serif;font-size:1rem;color:#e8ff3a;letter-spacing:0.05em;}
+.day-btn-lbl{font-size:0.58rem;color:#555;text-transform:uppercase;letter-spacing:0.1em;}
 
 .focus-row{display:flex;justify-content:space-between;align-items:center;padding:0.75rem 1.25rem 0.4rem;}
-.focus-badge{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:#1a1a1a;border:1px solid var(–border2);color:var(–accent);padding:4px 10px;border-radius:3px;}
-.progress-text{font-size:0.68rem;color:var(–muted);}
+.focus-badge{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:#1a1a1a;border:1px solid #2a2a2a;color:#e8ff3a;padding:4px 10px;border-radius:3px;}
+.progress-text{font-size:0.68rem;color:#555;}
 .progress-bar-bg{height:2px;background:#1a1a1a;margin:0 1.25rem 1rem;border-radius:2px;overflow:hidden;}
-.progress-bar-fill{height:100%;background:var(–accent);border-radius:2px;transition:width 0.3s ease;}
+.progress-bar-fill{height:100%;background:#e8ff3a;border-radius:2px;transition:width 0.3s ease;}
 
 .ex-list{padding:0 1.25rem;display:flex;flex-direction:column;gap:1rem;}
 .section-wrap{display:flex;flex-direction:column;gap:8px;}
@@ -52,7 +52,7 @@
 .ex-header{display:flex;justify-content:space-between;align-items:center;padding:0.65rem 0.9rem;border-bottom:1px solid var(–border);gap:8px;}
 .ex-name{font-size:0.82rem;font-weight:500;color:#e0e0e0;flex:1;}
 .ex-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;}
-.ex-reps{font-size:0.63rem;color:var(–accent);font-weight:600;letter-spacing:0.05em;white-space:nowrap;}
+.ex-reps{font-size:0.63rem;color:#e8ff3a;font-weight:600;letter-spacing:0.05em;white-space:nowrap;}
 .ex-rest{font-size:0.6rem;color:#666;white-space:nowrap;}
 .sets-grid{padding:0.5rem 0.9rem 0.65rem;}
 .sets-header{display:grid;grid-template-columns:28px 1fr 1fr;gap:8px;margin-bottom:6px;}
@@ -61,66 +61,66 @@
 .set-num{font-size:0.7rem;color:var(–muted);text-align:center;font-weight:600;}
 input[type=number]{background:#0f0f0f;border:1px solid var(–border2);border-radius:4px;color:var(–text);font-size:0.9rem;padding:6px 4px;text-align:center;width:100%;font-family:inherit;outline:none;-moz-appearance:textfield;}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
-input[type=number]:focus{border-color:var(–accent);}
+input[type=number]:focus{border-color:#e8ff3a;}
 .rest-btn-wrap{padding:0 0.9rem 0.7rem;}
 .rest-btn{width:100%;padding:7px;background:#1a1a1a;border:1px solid var(–border2);border-radius:4px;color:#aaa;font-size:0.72rem;font-family:inherit;cursor:pointer;letter-spacing:0.05em;transition:all 0.15s;}
-.rest-btn:hover{border-color:var(–accent);color:var(–accent);}
+.rest-btn:hover{border-color:#e8ff3a;color:#e8ff3a;}
 .cardio-note{padding:0.5rem 0.9rem 0.6rem;font-size:0.72rem;color:var(–accent2);}
 .last-session{padding:0.4rem 0.9rem;background:#0d0d0d;border-bottom:1px solid var(–border);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .last-session-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:#444;flex-shrink:0;}
 .last-session-chips{display:flex;gap:5px;flex-wrap:wrap;}
 .last-chip{font-size:0.68rem;color:#777;background:#1a1a1a;border:1px solid #222;border-radius:3px;padding:2px 7px;}
 .trend-up{color:#6fcf3a;font-size:0.65rem;font-weight:700;margin-left:4px;}
-.trend-down{color:var(–accent2);font-size:0.65rem;font-weight:700;margin-left:4px;}
+.trend-down{color:#ff4d00;font-size:0.65rem;font-weight:700;margin-left:4px;}
 .trend-eq{color:#555;font-size:0.65rem;margin-left:4px;}
 
-#timer-overlay{position:fixed;bottom:0;left:0;right:0;max-width:600px;margin:0 auto;background:#111;border-top:2px solid var(–accent);padding:1rem 1.25rem;z-index:100;display:none;align-items:center;gap:1rem;}
+#timer-overlay{position:fixed;bottom:0;left:0;right:0;max-width:600px;margin:0 auto;background:#111;border-top:2px solid #e8ff3a;padding:1rem 1.25rem;z-index:100;display:none;align-items:center;gap:1rem;}
 #timer-overlay.show{display:flex;}
 .timer-label{font-size:0.65rem;color:var(–muted);text-transform:uppercase;letter-spacing:0.1em;flex:1;}
-.timer-label span{display:block;font-family:‘Bebas Neue’,sans-serif;font-size:2rem;color:var(–accent);line-height:1;letter-spacing:0.05em;}
+.timer-label span{display:block;font-family:‘Bebas Neue’,sans-serif;font-size:2rem;color:#e8ff3a;line-height:1;letter-spacing:0.05em;}
 .timer-bar-wrap{flex:2;}
 .timer-bar-bg{height:4px;background:#2a2a2a;border-radius:2px;overflow:hidden;}
-.timer-bar-fill{height:100%;background:var(–accent);border-radius:2px;transition:width 0.5s linear;}
+.timer-bar-fill{height:100%;background:#e8ff3a;border-radius:2px;transition:width 0.5s linear;}
 .timer-cancel{background:transparent;border:1px solid #333;border-radius:4px;color:var(–muted);font-size:0.7rem;font-family:inherit;padding:6px 10px;cursor:pointer;white-space:nowrap;}
 
-.save-btn{display:block;margin:1.5rem 1.25rem 0;width:calc(100% - 2.5rem);padding:0.9rem;background:var(–accent);color:#0a0a0a;border:none;border-radius:6px;font-family:‘Bebas Neue’,sans-serif;font-size:1.1rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;}
+.save-btn{display:block;margin:1.5rem 1.25rem 0;width:calc(100% - 2.5rem);padding:0.9rem;background:#e8ff3a;color:#0a0a0a;border:none;border-radius:6px;font-family:‘Bebas Neue’,sans-serif;font-size:1.1rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;}
 .save-btn:disabled{opacity:0.5;cursor:not-allowed;}
-.save-btn.done{background:#2a3a0a;color:var(–accent);}
+.save-btn.done{background:#2a3a0a;color:#e8ff3a;}
 
 /* CHECK-IN */
 .checkin-wrap{padding:0 1.25rem;display:flex;flex-direction:column;gap:1rem;}
 .section-intro{padding:0.75rem 1.25rem 0;font-size:0.75rem;color:var(–muted);line-height:1.5;}
 .checkin-card{background:var(–card);border:1px solid var(–border);border-radius:6px;overflow:hidden;}
-.checkin-card-header{padding:0.75rem 0.9rem;border-bottom:1px solid var(–border);font-family:‘Bebas Neue’,sans-serif;font-size:1rem;letter-spacing:0.06em;color:var(–accent);}
+.checkin-card-header{padding:0.75rem 0.9rem;border-bottom:1px solid #1e1e1e;font-family:‘Bebas Neue’,sans-serif;font-size:1rem;letter-spacing:0.06em;color:#e8ff3a;}
 .checkin-field{padding:0.6rem 0.9rem;border-bottom:1px solid var(–border);display:flex;flex-direction:column;gap:6px;}
 .checkin-field:last-child{border-bottom:none;}
 .checkin-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;color:var(–muted);}
 .checkin-input{background:#0f0f0f;border:1px solid var(–border2);border-radius:4px;color:var(–text);font-size:0.85rem;padding:8px 10px;font-family:inherit;outline:none;width:100%;}
-.checkin-input:focus{border-color:var(–accent);}
+.checkin-input:focus{border-color:#e8ff3a;}
 .checkin-range{display:flex;gap:5px;}
 .checkin-range-btn{flex:1;padding:7px 2px;background:#1a1a1a;border:1px solid var(–border2);border-radius:4px;color:var(–muted);font-size:0.72rem;font-family:inherit;cursor:pointer;text-align:center;transition:all 0.15s;}
-.checkin-range-btn.selected{background:var(–accent);border-color:var(–accent);color:#0a0a0a;font-weight:600;}
+.checkin-range-btn.selected{background:#e8ff3a;border-color:#e8ff3a;color:#0a0a0a;font-weight:600;}
 .checkin-state-wrap{display:flex;gap:6px;}
 .checkin-state-btn{flex:1;padding:7px 4px;background:#1a1a1a;border:1px solid var(–border2);border-radius:4px;color:var(–muted);font-size:0.75rem;font-family:inherit;cursor:pointer;text-align:center;transition:all 0.15s;}
-.checkin-state-btn.selected{border-color:var(–accent);color:var(–accent);font-weight:600;}
-.checkin-state-btn.selected.mal{border-color:var(–accent2);color:var(–accent2);}
+.checkin-state-btn.selected{border-color:#e8ff3a;color:#e8ff3a;font-weight:600;}
+.checkin-state-btn.selected.mal{border-color:#ff4d00;color:#ff4d00;}
 .analysis-box{font-size:0.8rem;line-height:1.65;color:#ccc;white-space:pre-wrap;}
-.analysis-tag{display:inline-block;background:#1a1a1a;border:1px solid var(–border2);border-radius:3px;padding:2px 8px;font-size:0.62rem;color:var(–accent);font-weight:600;letter-spacing:0.08em;margin-bottom:10px;}
+.analysis-tag{display:inline-block;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:3px;padding:2px 8px;font-size:0.62rem;color:#e8ff3a;font-weight:600;letter-spacing:0.08em;margin-bottom:10px;}
 .analysis-loading{color:var(–muted);font-size:0.8rem;padding:0.5rem 0;text-align:center;}
 
 /* HISTORY */
 .history-list{padding:0.5rem 1.25rem;display:flex;flex-direction:column;gap:0.75rem;}
 .history-card{background:var(–card);border:1px solid var(–border);border-radius:6px;padding:0.9rem;}
-.history-date{font-family:‘Bebas Neue’,sans-serif;font-size:1rem;color:var(–accent);letter-spacing:0.06em;margin-bottom:0.6rem;text-transform:uppercase;}
+.history-date{font-family:‘Bebas Neue’,sans-serif;font-size:1rem;color:#e8ff3a;letter-spacing:0.06em;margin-bottom:0.6rem;text-transform:uppercase;}
 .history-ex{margin-bottom:0.6rem;}
 .history-ex-name{font-size:0.73rem;color:#aaa;margin-bottom:4px;}
 .history-set-row{display:flex;flex-wrap:wrap;gap:6px;}
 .history-chip{background:#1e1e1e;border:1px solid var(–border2);border-radius:3px;padding:3px 8px;font-size:0.7rem;color:#e0e0e0;font-weight:500;}
 .ci-hist-card{background:var(–card);border:1px solid var(–border);border-radius:6px;padding:0.9rem;margin-bottom:0.75rem;}
-.ci-hist-date{font-family:‘Bebas Neue’,sans-serif;font-size:0.9rem;color:var(–accent);letter-spacing:0.06em;margin-bottom:0.5rem;}
+.ci-hist-date{font-family:‘Bebas Neue’,sans-serif;font-size:0.9rem;color:#e8ff3a;letter-spacing:0.06em;margin-bottom:0.5rem;}
 .ci-hist-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #1a1a1a;font-size:0.72rem;}
 .ci-hist-row:last-child{border-bottom:none;}
-.ci-hist-key{color:var(–muted);}
+.ci-hist-key{color:#555;}
 .ci-hist-val{color:var(–text);font-weight:500;}
 .hist-section-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.18em;color:#444;padding-bottom:6px;border-bottom:1px solid #1a1a1a;margin:0 1.25rem 0.75rem;}
 
@@ -199,18 +199,18 @@ input[type=number]:focus{border-color:var(–accent);}
 .review-countdown-text{flex:1;}
 .review-countdown-title{font-size:0.72rem;font-weight:600;color:#ccc;margin-bottom:1px;}
 .review-countdown-sub{font-size:0.62rem;color:var(–muted);}
-.review-days-badge{font-family:‘Bebas Neue’,sans-serif;font-size:1.4rem;color:var(–accent);letter-spacing:0.05em;flex-shrink:0;}
-.review-days-badge.urgent{color:var(–accent2);}
-.review-ready{background:#0d1a00;border-color:var(–accent);}
+.review-days-badge{font-family:‘Bebas Neue’,sans-serif;font-size:1.4rem;color:#e8ff3a;letter-spacing:0.05em;flex-shrink:0;}
+.review-days-badge.urgent{color:#ff4d00;}
+.review-ready{background:#0d1a00;border-color:#e8ff3a;}
 .review-ready .review-countdown{background:#0d1a00;}
-.review-ready .review-countdown-title{color:var(–accent);}
-.review-btn{width:100%;padding:0.75rem;background:var(–accent);color:#0a0a0a;border:none;font-family:‘Bebas Neue’,sans-serif;font-size:1rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;}
+.review-ready .review-countdown-title{color:#e8ff3a;}
+.review-btn{width:100%;padding:0.75rem;background:#e8ff3a;color:#0a0a0a;border:none;font-family:‘Bebas Neue’,sans-serif;font-size:1rem;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;}
 .review-btn:disabled{opacity:0.5;cursor:not-allowed;}
-.review-btn.rest{background:var(–accent2);}
+.review-btn.rest{background:#ff4d00;}
 .review-result{background:var(–card);border-top:1px solid var(–border);}
-.review-result-header{padding:0.6rem 0.9rem;border-bottom:1px solid var(–border);font-family:‘Bebas Neue’,sans-serif;font-size:0.9rem;color:var(–accent);letter-spacing:0.06em;}
+.review-result-header{padding:0.6rem 0.9rem;border-bottom:1px solid #1e1e1e;font-family:‘Bebas Neue’,sans-serif;font-size:0.9rem;color:#e8ff3a;letter-spacing:0.06em;}
 .review-result-body{padding:0.9rem;font-size:0.8rem;line-height:1.7;color:#ccc;white-space:pre-wrap;}
-.review-result-tag{display:inline-block;background:#1a2400;border:1px solid var(–accent);border-radius:3px;padding:2px 8px;font-size:0.62rem;color:var(–accent);font-weight:600;letter-spacing:0.08em;margin-bottom:10px;}
+.review-result-tag{display:inline-block;background:#1a2400;border:1px solid #e8ff3a;border-radius:3px;padding:2px 8px;font-size:0.62rem;color:#e8ff3a;font-weight:600;letter-spacing:0.08em;margin-bottom:10px;}
 
 .hidden{display:none;}
 </style>
@@ -388,7 +388,7 @@ input[type=number]:focus{border-color:var(–accent);}
   </div>
   <div class="diet-crohn"><strong>⚠️ Adaptado para Crohn:</strong> Sin lácteos · Verduras siempre cocidas · Sin fritos ni picantes · Fibra soluble · Cocciones suaves.</div>
   <div class="diet-sch">
-    <span class="diet-sch-lbl">Tu turno (ajusta el orden de comidas):</span>
+    <span class="diet-sch-lbl">Tu horario de entreno:</span>
     <div class="diet-sch-btns">
       <button class="diet-sch-btn on" id="diet-btn-tarde" onclick="setDietSch('tarde')">🌆 Tarde</button>
       <button class="diet-sch-btn" id="diet-btn-manana" onclick="setDietSch('manana')">🌅 Mañana</button>
@@ -415,9 +415,10 @@ input[type=number]:focus{border-color:var(–accent);}
     </div>
     <div class="meal-cards">
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time t-tarde-show">9:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
         <div class="meal-body">
-          <div class="pre-note-manana">💪 Turno mañana: este desayuno ES tu pre-entreno. Entrena 60 min después.</div>
+          <div class="pre-note-manana">💪 Turno mañana: desayuna a las 8:15 y entrena a las 9:30.</div>
+          <div class="pre-note-tarde">☕ Si desayunas en el bar: tostada pan blanco + AOVE + jamón o pavo. Sin lácteos.</div>
           <div class="food-row"><span class="food-name">Avena copos finos cocida en agua</span><span class="food-amt">70 g</span></div>
           <div class="food-row"><span class="food-name">Claras de huevo a la plancha</span><span class="food-amt">4 claras (130 g)</span></div>
           <div class="food-row"><span class="food-name">Plátano maduro</span><span class="food-amt">1 med (100 g)</span></div>
@@ -427,7 +428,7 @@ input[type=number]:focus{border-color:var(–accent);}
       </div>
       <div class="pm-tarde">
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
@@ -442,13 +443,13 @@ input[type=number]:focus{border-color:var(–accent);}
             <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">200 g</span></div>
             <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">200 g</span></div>
             <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">100 g</span></div>
-            <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Boniato cocido</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
             <div class="meal-macros"><span class="mpill p">P 46g</span><span class="mpill c">C 48g</span><span class="mpill f">G 13g</span></div>
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~320 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">18:00 h</div></div></div><span class="meal-kcal">~320 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
             <div class="food-row"><span class="food-name">Atún al natural escurrido</span><span class="food-amt">120 g</span></div>
@@ -468,7 +469,7 @@ input[type=number]:focus{border-color:var(–accent);}
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:00 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
@@ -482,14 +483,14 @@ input[type=number]:focus{border-color:var(–accent);}
             <div class="food-row"><span class="food-name">Pechuga de pollo al horno</span><span class="food-amt">200 g</span></div>
             <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">200 g</span></div>
             <div class="food-row"><span class="food-name">Zanahoria cocida</span><span class="food-amt">100 g</span></div>
-            <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">80 g</span></div>
+            <div class="food-row"><span class="food-name">Boniato cocido</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cda (10 ml)</span></div>
             <div class="meal-macros"><span class="mpill p">P 46g</span><span class="mpill c">C 48g</span><span class="mpill f">G 13g</span></div>
           </div>
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">21:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
         <div class="meal-body">
           <div class="food-row"><span class="food-name">Merluza al vapor o plancha</span><span class="food-amt">200 g</span></div>
           <div class="food-row"><span class="food-name">Puré de calabaza (sin leche)</span><span class="food-amt">200 g</span></div>
@@ -499,7 +500,7 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
     </div>
-    <div class="diet-tip"><strong>💡 Consejo del día</strong>🌅 Mañana: el desayuno ya ES tu pre-entreno — entrena 60 min después. 🌆 Tarde: la comida ya ES tu pre-entreno — entrena 60 min después. Bebe 2,5 L de agua.</div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>🌅 Mañana: desayuna a las 8:15, entrena a las 9:30. 🌆 Tarde: si desayunas en el bar, pide tostada de pan blanco con AOVE + jamón/pavo (sin lácteos). La comida a las 13:30 es tu pre-entreno — entrena a las 16:00. Post-entreno a las 18:00. Cena a las 21:30. Bebe 2,5 L de agua.</div>
   </div>
 
   <!-- MARTES -->
@@ -511,8 +512,10 @@ input[type=number]:focus{border-color:var(–accent);}
     </div>
     <div class="meal-cards">
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~420 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time t-tarde-show">9:30 h</div></div></div><span class="meal-kcal">~420 kcal</span></div>
         <div class="meal-body">
+          <div class="pre-note-manana">💪 Turno mañana: desayuna a las 8:15 y entrena a las 9:30.</div>
+          <div class="pre-note-tarde">☕ Si desayunas en el bar: tostada pan blanco + AOVE + jamón o pavo. Sin lácteos.</div>
           <div class="food-row"><span class="food-name">Tostadas de pan de arroz</span><span class="food-amt">3 reba (60 g)</span></div>
           <div class="food-row"><span class="food-name">Huevos revueltos (enteros)</span><span class="food-amt">3 huevos</span></div>
           <div class="food-row"><span class="food-name">Aguacate</span><span class="food-amt">½ ud (70 g)</span></div>
@@ -522,7 +525,7 @@ input[type=number]:focus{border-color:var(–accent);}
       </div>
       <div class="pm-tarde">
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Pechuga de pollo cocida en dados</span><span class="food-amt">100 g</span></div>
             <div class="food-row"><span class="food-name">Pasta de arroz cocida</span><span class="food-amt">100 g</span></div>
@@ -542,7 +545,7 @@ input[type=number]:focus{border-color:var(–accent);}
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~300 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">18:00 h</div></div></div><span class="meal-kcal">~300 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">100 g</span></div>
             <div class="food-row"><span class="food-name">Plátano</span><span class="food-amt">1 med (100 g)</span></div>
@@ -562,7 +565,7 @@ input[type=number]:focus{border-color:var(–accent);}
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:00 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Pechuga de pollo cocida</span><span class="food-amt">100 g</span></div>
             <div class="food-row"><span class="food-name">Pasta de arroz cocida</span><span class="food-amt">100 g</span></div>
@@ -583,11 +586,11 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~360 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">21:30 h</div></div></div><span class="meal-kcal">~360 kcal</span></div>
         <div class="meal-body">
           <div class="food-row"><span class="food-name">Pechuga de pollo a la plancha</span><span class="food-amt">180 g</span></div>
           <div class="food-row"><span class="food-name">Puré de patata (sin leche, con AOVE)</span><span class="food-amt">200 g</span></div>
-          <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Boniato cocido</span><span class="food-amt">100 g</span></div>
           <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
           <div class="meal-macros"><span class="mpill p">P 42g</span><span class="mpill c">C 32g</span><span class="mpill f">G 9g</span></div>
         </div>
@@ -616,7 +619,7 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~220 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~220 kcal</span></div>
         <div class="meal-body">
           <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">100 g</span></div>
           <div class="food-row"><span class="food-name">Biscotes de arroz</span><span class="food-amt">4 uds (40 g)</span></div>
@@ -644,17 +647,17 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">21:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
         <div class="meal-body">
-          <div class="food-row"><span class="food-name">Dorada al horno con limón</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Merluza al horno con limón</span><span class="food-amt">200 g</span></div>
           <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
-          <div class="food-row"><span class="food-name">Espinacas cocidas bien escurridas</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Espinacas rehogadas con AOVE</span><span class="food-amt">80 g</span></div>
           <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
           <div class="meal-macros"><span class="mpill p">P 38g</span><span class="mpill c">C 28g</span><span class="mpill f">G 9g</span></div>
         </div>
       </div>
     </div>
-    <div class="diet-tip"><strong>💡 Consejo del día</strong>Aprovecha para descansar e hidratarte bien. Las espinacas cocidas son mejor toleradas que crudas en Crohn. Buen día para preparar tuppers.</div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>Aprovecha para descansar e hidratarte bien. Las espinacas rehogadas con un poco de AOVE son perfectas para Crohn — suaves y nutritivas. Buen día para preparar tuppers.</div>
   </div>
 
   <!-- JUEVES -->
@@ -666,8 +669,10 @@ input[type=number]:focus{border-color:var(–accent);}
     </div>
     <div class="meal-cards">
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time t-tarde-show">9:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
         <div class="meal-body">
+          <div class="pre-note-manana">💪 Turno mañana: desayuna a las 8:15 y entrena a las 9:30.</div>
+          <div class="pre-note-tarde">☕ Si desayunas en el bar: tostada pan blanco + AOVE + jamón o pavo. Sin lácteos.</div>
           <div class="food-row"><span class="food-name">Avena cocida en agua</span><span class="food-amt">70 g</span></div>
           <div class="food-row"><span class="food-name">1 huevo + 2 claras revueltos</span><span class="food-amt">130 g</span></div>
           <div class="food-row"><span class="food-name">Plátano</span><span class="food-amt">1 med (100 g)</span></div>
@@ -677,7 +682,7 @@ input[type=number]:focus{border-color:var(–accent);}
       </div>
       <div class="pm-tarde">
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Salmón ahumado</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">120 g</span></div>
@@ -696,7 +701,7 @@ input[type=number]:focus{border-color:var(–accent);}
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~310 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">18:00 h</div></div></div><span class="meal-kcal">~310 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">120 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">130 g</span></div>
@@ -716,7 +721,7 @@ input[type=number]:focus{border-color:var(–accent);}
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:00 h</div></div></div><span class="meal-kcal">~280 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Salmón ahumado</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">120 g</span></div>
@@ -736,17 +741,17 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">21:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
         <div class="meal-body">
-          <div class="food-row"><span class="food-name">Bacalao al horno</span><span class="food-amt">200 g</span></div>
+          <div class="food-row"><span class="food-name">Merluza al horno</span><span class="food-amt">200 g</span></div>
           <div class="food-row"><span class="food-name">Patata cocida sin piel</span><span class="food-amt">150 g</span></div>
-          <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Boniato cocido</span><span class="food-amt">100 g</span></div>
           <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
           <div class="meal-macros"><span class="mpill p">P 40g</span><span class="mpill c">C 28g</span><span class="mpill f">G 8g</span></div>
         </div>
       </div>
     </div>
-    <div class="diet-tip"><strong>💡 Consejo del día</strong>El bacalao es uno de los pescados más digestivos. Solo sal, limón y aceite — sin especias fuertes.</div>
+    <div class="diet-tip"><strong>💡 Consejo del día</strong>La merluza al horno es de los pescados más digestivos y suaves. Solo sal, limón y aceite — sin especias fuertes.</div>
   </div>
 
   <!-- VIERNES -->
@@ -759,8 +764,10 @@ input[type=number]:focus{border-color:var(–accent);}
     <div class="diet-note green">⚡ Día de piernas: <strong>+50 kcal extra</strong> — mayor grupo muscular, mayor gasto energético.</div>
     <div class="meal-cards">
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time">7:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌅</span><div><div class="meal-name">Desayuno</div><div class="meal-time t-tarde-show">9:30 h</div></div></div><span class="meal-kcal">~430 kcal</span></div>
         <div class="meal-body">
+          <div class="pre-note-manana">💪 Turno mañana: desayuna a las 8:15 y entrena a las 9:30.</div>
+          <div class="pre-note-tarde">☕ Si desayunas en el bar: tostada pan blanco + AOVE + jamón o pavo. Sin lácteos.</div>
           <div class="food-row"><span class="food-name">Avena cocida en agua</span><span class="food-amt">70 g</span></div>
           <div class="food-row"><span class="food-name">Claras de huevo a la plancha</span><span class="food-amt">4 claras (130 g)</span></div>
           <div class="food-row"><span class="food-name">Plátano</span><span class="food-amt">1 med (100 g)</span></div>
@@ -770,7 +777,7 @@ input[type=number]:focus{border-color:var(–accent);}
       </div>
       <div class="pm-tarde">
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">10:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
@@ -790,7 +797,7 @@ input[type=number]:focus{border-color:var(–accent);}
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">~1h después del entreno</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">💪</span><div><div class="meal-name">Post-entreno · Merienda</div><div class="meal-time">18:00 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Atún al natural</span><span class="food-amt">120 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">150 g</span></div>
@@ -810,7 +817,7 @@ input[type=number]:focus{border-color:var(–accent);}
           </div>
         </div>
         <div class="meal-card">
-          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:30 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
+          <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🍎</span><div><div class="meal-name">Post-entreno / Media mañana</div><div class="meal-time">11:00 h</div></div></div><span class="meal-kcal">~270 kcal</span></div>
           <div class="meal-body">
             <div class="food-row"><span class="food-name">Pechuga de pavo en lonchas</span><span class="food-amt">80 g</span></div>
             <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
@@ -830,11 +837,11 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~340 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">21:30 h</div></div></div><span class="meal-kcal">~340 kcal</span></div>
         <div class="meal-body">
           <div class="food-row"><span class="food-name">Pechuga de pollo a la plancha</span><span class="food-amt">180 g</span></div>
           <div class="food-row"><span class="food-name">Puré de calabaza (con AOVE)</span><span class="food-amt">200 g</span></div>
-          <div class="food-row"><span class="food-name">Espárragos cocidos</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Calabaza al horno</span><span class="food-amt">100 g</span></div>
           <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
           <div class="meal-macros"><span class="mpill p">P 40g</span><span class="mpill c">C 24g</span><span class="mpill f">G 10g</span></div>
         </div>
@@ -888,11 +895,11 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~340 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">21:30 h</div></div></div><span class="meal-kcal">~340 kcal</span></div>
         <div class="meal-body">
           <div class="food-row"><span class="food-name">Pechuga de pollo a la plancha</span><span class="food-amt">180 g</span></div>
           <div class="food-row"><span class="food-name">Puré de patata (AOVE, sin leche)</span><span class="food-amt">180 g</span></div>
-          <div class="food-row"><span class="food-name">Judías verdes cocidas</span><span class="food-amt">100 g</span></div>
+          <div class="food-row"><span class="food-name">Boniato cocido</span><span class="food-amt">100 g</span></div>
           <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
           <div class="meal-macros"><span class="mpill p">P 40g</span><span class="mpill c">C 32g</span><span class="mpill f">G 10g</span></div>
         </div>
@@ -947,11 +954,11 @@ input[type=number]:focus{border-color:var(–accent);}
         </div>
       </div>
       <div class="meal-card">
-        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">20:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
+        <div class="meal-head"><div class="meal-head-left"><span class="meal-ico">🌙</span><div><div class="meal-name">Cena</div><div class="meal-time">21:30 h</div></div></div><span class="meal-kcal">~330 kcal</span></div>
         <div class="meal-body">
           <div class="food-row"><span class="food-name">Merluza al vapor</span><span class="food-amt">200 g</span></div>
           <div class="food-row"><span class="food-name">Arroz blanco cocido</span><span class="food-amt">100 g</span></div>
-          <div class="food-row"><span class="food-name">Espinacas cocidas bien escurridas</span><span class="food-amt">80 g</span></div>
+          <div class="food-row"><span class="food-name">Espinacas rehogadas con AOVE</span><span class="food-amt">80 g</span></div>
           <div class="food-row"><span class="food-name">Aceite de oliva</span><span class="food-amt">1 cdta (5 ml)</span></div>
           <div class="meal-macros"><span class="mpill p">P 38g</span><span class="mpill c">C 28g</span><span class="mpill f">G 8g</span></div>
         </div>
