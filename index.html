@@ -219,6 +219,14 @@
   .pm-manana-t{display:none;}
   .diet-view.manana .pm-tarde-t{display:none;}
   .diet-view.manana .pm-manana-t{display:block;}
+
+  /* BACKUP */
+  .backup-bar{display:flex;gap:8px;padding:0.6rem 1.25rem;flex-wrap:wrap;}
+  .backup-btn{flex:1;padding:8px 10px;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:0.85rem;letter-spacing:0.06em;cursor:pointer;border:none;transition:all 0.2s;}
+  .backup-btn.export{background:#1a2400;border:1px solid #e8ff3a;color:#e8ff3a;}
+  .backup-btn.import{background:#1a0a00;border:1px solid #ff4d00;color:#ff4d00;}
+  .backup-msg{font-size:0.7rem;color:#6fcf3a;padding:0 1.25rem 0.5rem;display:none;}
+  .backup-msg.show{display:block;}
   .hidden{display:none;}
 </style>
 </head>
@@ -244,6 +252,13 @@
   <div class="profile-chip">Crohn: <span>⚠ vigilar</span></div>
 </div>
 
+<!-- BACKUP BAR -->
+<div class="backup-bar">
+  <button class="backup-btn export" onclick="exportData()">⬇ Exportar datos</button>
+  <button class="backup-btn import" onclick="document.getElementById('import-file').click()">⬆ Importar datos</button>
+  <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+</div>
+<div class="backup-msg" id="backup-msg"></div>
 <!-- REVIEW BANNER -->
 <div class="review-banner" id="review-banner">
   <div class="review-countdown" id="review-countdown">
@@ -1447,6 +1462,64 @@ function renderHistory(){
       cil.appendChild(card);
     });
   }
+}
+
+
+// ── BACKUP / RESTORE ────────────────────────────────────────────
+function exportData(){
+  const data = {
+    gym_history: localStorage.getItem('gym_history'),
+    gym_checkins: localStorage.getItem('gym_checkins'),
+    gym_start_date: localStorage.getItem('gym_start_date'),
+    exported: new Date().toISOString()
+  };
+  // Add review data
+  for(let i=1; i<=20; i++){
+    const r = localStorage.getItem('gym_review_'+i);
+    if(r) data['gym_review_'+i] = r;
+  }
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'gymlog_backup_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+  showBackupMsg('✅ Datos exportados correctamente', '#6fcf3a');
+}
+
+function importData(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try{
+      const data = JSON.parse(e.target.result);
+      if(data.gym_history) localStorage.setItem('gym_history', data.gym_history);
+      if(data.gym_checkins) localStorage.setItem('gym_checkins', data.gym_checkins);
+      if(data.gym_start_date) localStorage.setItem('gym_start_date', data.gym_start_date);
+      for(let i=1; i<=20; i++){
+        if(data['gym_review_'+i]) localStorage.setItem('gym_review_'+i, data['gym_review_'+i]);
+      }
+      loadData();
+      buildDayRows();
+      renderWorkout();
+      initReviewBanner();
+      showBackupMsg('✅ Datos restaurados correctamente. Recarga si es necesario.', '#6fcf3a');
+    }catch(err){
+      showBackupMsg('❌ Error al importar. Comprueba el archivo.', '#ff4d00');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function showBackupMsg(msg, color){
+  const el = document.getElementById('backup-msg');
+  el.textContent = msg;
+  el.style.color = color;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 4000);
 }
 
 // ── REVISIÓN QUINCENAL ──────────────────────────────────────────
